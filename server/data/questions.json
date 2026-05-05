@@ -578,5 +578,576 @@
       "G"
     ],
     "id": "1777997810630-c92ea8bf6fc808"
+  },
+  {
+    "type": "drag_and_drop",
+    "statement": "Resolver",
+    "textParts": [
+      "El",
+      "__blank__",
+      "se visualiza en la linea del calculo de la condicion de optimilidad y me permite saber cuanto",
+      "__blank__",
+      "la solucion al",
+      "__blank__",
+      "la fabricacion del mismo en un caso de maximizacion"
+    ],
+    "draggableOptions": [
+      "costo de oportunidad",
+      "aumenta",
+      "la solución al",
+      "forzar",
+      "disminuye",
+      "producto",
+      "valor marginal",
+      "coeficiente",
+      "recurso",
+      "restricciones",
+      "quitar",
+      "fabricar",
+      "oportunidad"
+    ],
+    "correctAnswers": [
+      "costo de oportunidad",
+      "disminuye",
+      "forzar"
+    ],
+    "ocrText": "costo de oportunidad\nse visualiza en la linea del calculo de la condición de optimalidad y me permite saber cuanto\naumenta\nla solución al\nforzar\nla fabricación del mismo en un caso de maximización.\ndisminuye\nproducto\nvalor marginal\ncoeficiente\nrecurso\nrestricciones\nquitar\nfabricar",
+    "id": "1777998569219-250811b4d97c98"
+  },
+  {
+    "type": "drag_and_drop",
+    "statement": "Resolver",
+    "textParts": [
+      "Cuando los coeficientes de las variables no basicas en el renglon z de la tabla optima existe una variable con valor de cero, lo que indica que esa ",
+      "__blank__",
+      " puede entrar a la solucion basica sin ",
+      "__blank__",
+      " el valor de z, pero provoca un cambio en el valor de las variables. Entonces estamos ante un caso de ",
+      "__blank__"
+    ],
+    "draggableOptions": [
+      "variable basica",
+      "alterar",
+      "degeneracion",
+      "solucion infactible",
+      "variable no basica",
+      "multiples alternativas optimas",
+      "soluciones no acotadas"
+    ],
+    "correctAnswers": [
+      "variable no basica",
+      "alterar",
+      "multiples alternativas optimas"
+    ],
+    "id": "1777998766802-69a0130b0db83"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante",
+    "options": [
+      "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
+      "a la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista",
+      "a la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
+      "a la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista"
+    ],
+    "correctAnswer": "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
+    "ocrText": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante\nSeleccione una:\na.\na la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nb.\na la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista\nC.\na la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nd.\na la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista\nLa respuesta correcta es: a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
+    "id": "1777999020693-1b5bf8afe7b8b8"
+  },
+  {
+    "type": "drag_and_drop",
+    "statement": "Resolver",
+    "textParts": [
+      "Los coeficientes, tanto de la ",
+      "__blank__",
+      "  como de las restricciones, son conocidos con exactitud y además no varian durante el período de tiempo en que se realiza el estudio",
+      "__blank__"
+    ],
+    "draggableOptions": [
+      "funcion objetivo",
+      "variables",
+      "certidumbre",
+      "divisibilidad",
+      "recursos",
+      "Aditividad",
+      "coeficientes tecnológicos",
+      "no negatividad",
+      "proporcionalidad",
+      "funcion objetivo",
+      "supuesto de"
+    ],
+    "correctAnswers": [
+      "funcion objetivo",
+      "certidumbre"
+    ],
+    "ocrText": "coeficientes, tanto de la\nvariables\ncomo de las restricciones, son conocidos con exactitud y además no varian durante el período de tiempo en que se realiza el estudio (supuesto de\ncertidumbre\n)\ndivisibilidad\nrecursos\nAditividad\ncoeficientes tecnológicos\nno negatividad\nproporcionalidad\nfuncion objetivo",
+    "id": "1777999173471-4f369a7b9a9148"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Las ideas básicas de la programación lineal surgieron de un estudio acerca de problemas de asignacion de recursos hecho por la fuerza aérea de los EE. UU. durante la Primera Guerra Mundial",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "Las ideas básicas de la programación lineal surgieron de un estudio acerca de problemas de asignacion de recursos hecho por la fuerza aérea de los EE. UU. durante la Primera Guerra Mundial\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1777999201522-d4c373015c77e"
+  },
+  {
+    "type": "drag_and_drop",
+    "statement": "Resolver",
+    "textParts": [
+      "El ",
+      "__blank__",
+      " se visualiza en la linea del calculo de la condicion de optimalidad y me permite decidir cuanto ",
+      "__blank__",
+      " el coeficiente en la ",
+      "__blank__",
+      " "
+    ],
+    "draggableOptions": [
+      "costo de oportunidad",
+      "aumentar",
+      "funcion objetivo",
+      "producto",
+      "valor marginal",
+      "coeficiente",
+      "recurso",
+      "disminuir",
+      "restricciones"
+    ],
+    "correctAnswers": [
+      "costo de oportunidad",
+      "aumentar",
+      "funcion objetivo"
+    ],
+    "ocrText": "1\ncosto de oportunidad\nse visualiza en la linea del calculo de la condición de optimalidad y me permite decidir cuanto\naumentar\nel coeficiente en la\nfuncion objetivo\nproducto\nvalor marginal\ncoeficiente\nrecurso\ndisminuir\nrestricciones",
+    "id": "1777999265009-fffd94c81060f8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La Programación Lineal trata la planificación de las actividades para obtener un resultado óptimo, esto es, el resultado que alcance una meta especificada",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "a Programación Lineal trata la planificación de las actividades para obtener un resultado óptimo, esto es, el resultado que alcance una meta especificada\neleccione una:\nVerdadero\nFalso",
+    "id": "1777999291918-acac510f2546c8"
+  },
+  {
+    "type": "table_drag_and_drop",
+    "statement": "La tabla inicial de simplex de un problema primal de maximizacion y cantidad a producir en programacion lineal se arma con:",
+    "table": {
+      "rows": 4,
+      "columns": 5,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "By"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Vector Base"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Coeficientes de Var.Base"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Valores de Var.Base"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Variables reales"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Variables Slack"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "C"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "G"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        }
+      ]
+    },
+    "draggableOptions": [
+      "Cj",
+      "costo de oportunidad",
+      "By",
+      "Vector Base",
+      "Coeficientes de Var.Base",
+      "Valores de Var.Base",
+      "Variables reales",
+      "Variables Slack",
+      "C",
+      "G"
+    ],
+    "id": "1777999419144-71382444d39"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la tabla optima del simplex para saber cuanto comprar de un articulo, en caso de un problema de minimizacion, debo mirar la linea de calculo de la condicion de factibilidad",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "id": "1777999485647-52cbd31ebf91"
+  },
+  {
+    "type": "drag_and_drop",
+    "statement": "Resolver",
+    "textParts": [
+      "En palabras simples la P.L. Busca asignar recursos limitados, entre actividades que compiten, de la forma mas optima posible. Por ello se utilizan los siguientes supuestos: ",
+      "__blank__",
+      ", ",
+      "__blank__",
+      ", ",
+      "__blank__",
+      ", ",
+      "__blank__"
+    ],
+    "draggableOptions": [
+      "No negatividad",
+      "Aditividad",
+      "Objetivo único",
+      "Certidumbre",
+      "Divisibilidad",
+      "Proporcionalidad",
+      "Función lineal",
+      "Variables de decision",
+      "Incertidumbre",
+      "division de valores",
+      "adición de gastos",
+      "recursos escasos"
+    ],
+    "correctAnswers": [
+      "Proporcionalidad",
+      "Aditividad",
+      "Divisibilidad",
+      "Certidumbre"
+    ],
+    "ocrText": "palabras simples la P.L. busca asignar recursos limitados, entre actividades que compiten, de la forma mas óptima posible. Por ello utiliza los siguientes supuestos:\nProporcionalidad\nAditividad\nDivisibilidad\nCertidumbre\nObjetivo único\nNo negatividad\nFunción lineal\nVariables de decision\nIncertidumbre\ndivision de valores\nadición de gastos\nrecursos escasos",
+    "id": "1777999608845-eda3b19ca0ae5"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación lineal es",
+    "options": [
+      "Es una técnica cuantitiva de asignacion de recursos de manera óptima",
+      "Es una técnica objetiva de provision de recursos de manera optima",
+      "Es una técnica subjetiva de asignacion de recursos de manera optima",
+      "Es una técnica cualitiva de asignacion de recursos de manera óptima"
+    ],
+    "correctAnswer": "Es una técnica cuantitiva de asignacion de recursos de manera óptima",
+    "ocrText": "La programación lineal es\nSeleccione una:\na. Es una técnica cuantitiva de asignacion de recursos de manera óptima\nb. Es una técnica objetiva de provision de recursos de manera optima\nC. Es una técnica subjetiva de asignacion de recursos de manera optima\nd. Es una técnica cualitiva de asignacion de recursos de manera óptima\nLa respuesta correcta es: Es una técnica cuantitiva de asignación de recursos de manera optima",
+    "id": "1777999649632-597fd7cc2fd58"
+  },
+  {
+    "type": "drag_and_drop",
+    "statement": "Resolver ",
+    "textParts": [
+      "Las ",
+      "__blank__",
+      " de nuestro ",
+      "__blank__",
+      " tomaran ",
+      "__blank__",
+      " ",
+      "__blank__",
+      " no negativos ( supuesto de ",
+      "__blank__",
+      " ), dado que no tiene sentido hablar de otro tipo de cantidades para objetivos fisicos:"
+    ],
+    "draggableOptions": [
+      "restricciones",
+      "modelo",
+      "nunca",
+      "valores",
+      "no negatividad",
+      "proporcionalidad",
+      "certidumbre",
+      "Aditividad",
+      "divisibilidad",
+      "recursos",
+      "función objetivo",
+      "variables",
+      "coeficientes tecnológicos",
+      "siempre"
+    ],
+    "correctAnswers": [
+      "proporcionalidad",
+      "modelo",
+      "siempre",
+      "valores",
+      "no negatividad"
+    ],
+    "ocrText": "Las\nrestricciones\nde nuestro\nmodelo\ntomarán\nnunca\nvalores\nno negativos (supuesto de\nno negatividad\n), dado que no tiene sentido hablar de otro tipo de cantidades\npara objetos fisicos.\nproporcionalidad\ncertidumbre\nAditividad\ndivisibilidad\nrecursos\nfunción objetivo\nvariables\ncoeficientes tecnológicos\nsiempre",
+    "id": "1777999775162-30cf3108261a4"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los problemas de mezcla se caracterizan porque las restricciones representan",
+    "options": [
+      "Cantidad porcentual de elementos a cumplir",
+      "Cantidad mínimos a cumplir",
+      "Cantidad disponibles",
+      "Cantidad maxima de elementos a cumplir"
+    ],
+    "correctAnswer": "Cantidad porcentual de elementos a cumplir",
+    "ocrText": "Los problemas de mezcla se caracterizan porque las restricciones representan\nSeleccione una:\na.\nCantidad porcentual de elementos a cumplir\nb.\nCantidad mínimos a cumplir\nC.\nCantidad disponibles\nd.\nCantidad maxima de elementos a cumplir\nLa respuesta correcta es: Cantidad porcentual de elementos a cumplir",
+    "id": "1777999892437-8bad57c43b0ba8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Variables artificiales son:",
+    "options": [
+      "Variables que representan cantidad de productos, aparecen para lograr la igualdad en el funcional",
+      "Variables que agregan al problema para lograr la igualdad en la inecuación y poder graficarlas.",
+      "Variables que representan sobrantes de recursos, aparecen para lograr la igualdad en la inecuacion.",
+      "Variables que se agregan al problema para poder comenzar la iteracion del método simplex en el primer cuadrante."
+    ],
+    "correctAnswer": "Variables que se agregan al problema para poder comenzar la iteracion del método simplex en el primer cuadrante.",
+    "ocrText": "Variables artificiales son:\nSeleccione una:\na.\nVariables que representan cantidad de productos, aparecen para lograr la igualdad en el funcional\nb.\nVariables que agregan al problema para lograr la igualdad en la inecuación y poder graficarlas.\nC.\nVariables que representan sobrantes de recursos, aparecen para lograr la igualdad en la inecuacion.\nd.\nVariables que se agregan al problema para poder comenzar la iteracion del método simplex en el primer cuadrante.\nLa respuesta correcta es: Variables que se agregan al problema para poder comenzar la iteracion del método simplex en el primer cuadrante.",
+    "id": "1777999892437-efe94ea916ebe8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El Valor marginal:",
+    "options": [
+      "está asociado a las variables reales y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente",
+      "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
+      "está asociado a las variables slack y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente",
+      "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminución admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos"
+    ],
+    "correctAnswer": "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
+    "ocrText": "El Valor marginal:\nSeleccione una:\na. está asociado a las variables reales y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente\nb. es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del productos, se presenta cuando no existe un cantidad de producto\nC.\nes el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos\nd.\nestá asociado a las variables slack y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente\nLa respuesta correcta es: es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminución admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
+    "id": "1777999892437-bdbfefb3f78988"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la tabla optima de simplex para saber cuanto sobra de un recurso, en caso de un problema de maximizacion, debo observar los coeficientes de la condicion de factibilidad",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "id": "1777999952016-e7ba036bd916e8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los problemas de mezcla se caracterizan porque las restricciones representan",
+    "options": [
+      "Cantidad porcentual de elementos a cumplir",
+      "Cantidad maxima de elementos a cumplir",
+      "Cantidad mínimos a cumplir",
+      "Cantidad disponibles"
+    ],
+    "correctAnswer": "Cantidad porcentual de elementos a cumplir",
+    "ocrText": "Los problemas de mezcla se caracterizan porque las restricciones representan\nSeleccione una:\na.\nCantidad porcentual de elementos a cumplir\nb.\nCantidad maxima de elementos a cumplir\nC.\nCantidad mínimos a cumplir\nd.\nCantidad disponibles\nLa respuesta correcta es: Cantidad porcentual de elementos a cumplir",
+    "id": "1777999966377-2026f6f4466e28"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los pilares de la programación lineal son:\nXi >= 0\nZ = F(x) -->Minimizar (lineal y unica)\n1 o más Ri >= bi\nZ = F(x) -->Maximizar (lineal y única)\n1 o más Ri<= bi\nA-1 x B >= X\nCb x AJ - cj >= 0",
+    "options": [
+      "2,4,6, 7",
+      "ninguna es correcta",
+      "1,2,3,4,5",
+      "1,3,5,7",
+      "Todas son correctas"
+    ],
+    "correctAnswer": "1,2,3,4,5",
+    "ocrText": "Los pilares de la programación lineal son:\n1) Xi >= 0\n2) Z = F(x) -->Minimizar (lineal y unica)\n3) 16 más Ri >= bi\n4) Z = F(x) -->Maximizar (lineal y única)\n5) 1 6 más Ri<= bi\n6) A-1 X B >= X\n7) Cb X AJ - cj >= 0\nIdentifique cuales son los pilares?\nSeleccione una:\na. 2,4,6, 7\nb. ninguna es correcta\nC. 1,2,3,4,5\nd. 1,3,5,7\ne. Todas son correctas\nLa respuesta correcta es: 1,2,3,4,5",
+    "id": "1778000106314-8eb1a2925a699"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante",
+    "options": [
+      "a la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que este exista",
+      "a la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que este exista",
+      "a la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista",
+      "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista"
+    ],
+    "correctAnswer": "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
+    "ocrText": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante\nSeleccione una:\na. a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que este exista\nb. a la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que este exista\nC. a la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que este exista\nd. a la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista\nLa respuesta correcta es: a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
+    "id": "1778000234757-28e7f70ce1e8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación lineal es",
+    "options": [
+      "Es una técnica cuantitiva de asignacion de recursos de manera óptima",
+      "Es una técnica objetiva de provision de recursos de manera optima",
+      "Es una técnica subjetiva de asignacion de recursos de manera óptima",
+      "Es una técnica cualitiva de asignacion de recursos de manera óptima"
+    ],
+    "correctAnswer": "Es una técnica cuantitiva de asignacion de recursos de manera óptima",
+    "ocrText": "La programación lineal es\nSeleccione una:\na. Es una técnica cuantitiva de asignacion de recursos de manera óptima\nb.\nEs una técnica objetiva de provision de recursos de manera optima\nC.\nEs una técnica subjetiva de asignacion de recursos de manera óptima\nd.\nEs una técnica cualitiva de asignacion de recursos de manera óptima\nLa respuesta correcta es: Es una técnica cuantitiva de asignacion de recursos de manera óptima",
+    "id": "1778000247930-1dd7177702239"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "George Dantzig nacio en 1.914 y trabajo para la Rand Corporation después de su aporte a la fuerza aérea. Fue profesor de Investigación de Operaciones en la Universidad de Seattle",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "George Dantzig nacio en 1.914 y trabajo para la Rand Corporation después de su aporte a la fuerza aérea. Fue profesor de Investigación de Operaciones en la Universidad de Seattle\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778000267250-487344fa877c38"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo de PL es incompatible:",
+    "options": [
+      "Existe el convexo factible, pero el Z crece hasta el infinito.",
+      "Tiene solución en un vértice del convexo.",
+      "No Existe convexo factible.",
+      "Tiene un covexo abierto"
+    ],
+    "correctAnswer": "No Existe convexo factible.",
+    "ocrText": "Un modelo de PL es incompatible:\nSeleccione una:\na.\nExiste el convexo factible, pero el Z crece hasta el infinito.\nb. Tiene solución en un vértice del convexo.\nC.\nNo Existe convexo factible.\nd.\nTiene un covexo abierto\nLa respuesta correcta es: No Existe convexo factible.",
+    "id": "1778000578468-e30c2d6d50a84"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un problema dual de maximizacion tiene tantas variables reales como restricciones tiene el problema primal al cual está asociado",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Verdadero",
+    "ocrText": "Un problema dual de maximizacion tiene tantas variables reales como restricciones tiene el problema primal al cual está asociado\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Verdadero'",
+    "id": "1778000578468-7bf957a10cd76"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La region factible (el poligono de soluciones) en un problema de PL queda determinado por:",
+    "options": [
+      "El conjunto de puntos determinado por las rectas de la funcion objetivo",
+      "Las rectas que definen el óptimo",
+      "El conjunto de puntos que cumplen con todas las restricciones",
+      "El conjunto de puntos determinado por las rectas de cada restricción"
+    ],
+    "correctAnswer": "El conjunto de puntos que cumplen con todas las restricciones",
+    "ocrText": "La region factible (el poligono de soluciones) en un problema de PL queda determinado por:\nSeleccione una:\na. El conjunto de puntos determinado por las rectas de la funcion objetivo\nb.\nLas rectas que definen el óptimo\nC.\nEl conjunto de puntos que cumplen con todas las restricciones\nd. El conjunto de puntos determinado por las rectas de cada restricción\nLa respuesta correcta es: El conjunto de puntos que cumplen con todas las restricciones",
+    "id": "1778000578468-796f49c334fed"
   }
 ]

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { DragEvent } from "react";
 import {
   ArrowUp,
@@ -63,6 +63,23 @@ const emptyTable: Omit<TableDragAndDropQuestion, "id"> = {
 
 function cleanList(values: string[]) {
   return values.map((value) => value.trim()).filter(Boolean);
+}
+
+function parseDragTextParts(rawValue: string) {
+  if (!rawValue.includes("|")) {
+    return rawValue
+      .split(/(__blank__)/)
+      .map((part) => (part.trim() === "__blank__" ? "__blank__" : part))
+      .filter((part) => part === "__blank__" || part.length > 0);
+  }
+
+  return rawValue
+    .split("|")
+    .map((part) => {
+      const trimmed = part.trim();
+      return trimmed === "__blank__" ? "__blank__" : part;
+    })
+    .filter((part) => part === "__blank__" || part.trim().length > 0);
 }
 
 function makeEmptyTable(rows: number, columns: number): DragTable {
@@ -801,15 +818,15 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
             key={draft.id}
             onChange={(parsedQuestion) => updateParsed(index, parsedQuestion)}
             onDraftTextChange={(text) => updateDraft(index, { ...draft, text })}
-            onRemove={() => removeDraft(index)}
+            onRemove={() => setDrafts((current) => current.filter((d) => d.id !== draft.id))}
             onReparse={() => reparse(index)}
             onUseAsTableAnswers={() => {
               applyDraftAsTableAnswers(draft);
-              removeDraft(index);
+              setDrafts((current) => current.filter((d) => d.id !== draft.id));
             }}
             onUseAsTableShell={() => {
               applyDraftAsEmptyTable(draft);
-              removeDraft(index);
+              setDrafts((current) => current.filter((d) => d.id !== draft.id));
             }}
           />
         ))}
@@ -873,7 +890,7 @@ function ImportDraftEditor({
   onUseAsTableShell: () => void;
 }) {
   const question = draft.parsedQuestion;
-  const textPartsRaw = question.type === "drag_and_drop" ? question.textParts.join(" | ") : "";
+  const textPartsRaw = question.type === "drag_and_drop" ? question.textParts.join("") : "";
   const blankCount =
     question.type === "drag_and_drop" ? question.textParts.filter((part) => part === "__blank__").length : 0;
 
@@ -926,28 +943,25 @@ function ImportDraftEditor({
     });
   }
 
-  function removeDraft(index: number) {
-    setDrafts((current) => current.filter((_, draftIndex) => draftIndex !== index));
-  }
 
-  function markBlank(word: string) {
-    if (question.type !== "drag_and_drop" || !word.trim()) {
+
+  function markBlank(option: string) {
+    if (question.type !== "drag_and_drop" || !option.trim()) {
       return;
     }
 
-    const phrase = question.textParts.join(" ");
-    const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const nextPhrase = phrase.replace(new RegExp(`\\b${escaped}\\b`, "i"), "__blank__");
+    const phrase = question.textParts.join("");
+    const escaped = option.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const nextPhrase = phrase.replace(new RegExp(escaped, "i"), "__blank__");
     onChange({
       ...question,
-      textParts: nextPhrase.split(/(__blank__)/).map((part) => part.trim()).filter(Boolean),
-      draggableOptions: cleanList([...question.draggableOptions, word]),
-      correctAnswers: cleanList([...question.correctAnswers, word]),
+      textParts: parseDragTextParts(nextPhrase),
+      correctAnswers: cleanList([...question.correctAnswers, option]),
       ocrText: draft.text
     });
   }
 
-  const words = uniqueWords(draft.text).slice(0, 28);
+  const selectableOptions = cleanList(question.type === "drag_and_drop" ? question.draggableOptions : []);
 
   return (
     <article className="editor-panel import-card">
@@ -1026,7 +1040,7 @@ function ImportDraftEditor({
             onTextPartsRawChange={(value) =>
               onChange({
                 ...question,
-                textParts: value.split("|").map((part) => part.trim()).filter(Boolean),
+                textParts: parseDragTextParts(value),
                 ocrText: draft.text
               })
             }
@@ -1034,13 +1048,17 @@ function ImportDraftEditor({
             onCorrectAnswersChange={(correctAnswers) => onChange({ ...question, correctAnswers, ocrText: draft.text })}
           />
           <div className="word-picker">
-            <span>Marcar palabra como blank correcto</span>
+            <span>Marcar opcion como blank correcto</span>
             <div>
-              {words.map((word) => (
-                <button className="chip" key={word} type="button" onClick={() => markBlank(word)}>
-                  {word}
-                </button>
-              ))}
+              {selectableOptions.length > 0 ? (
+                selectableOptions.map((option) => (
+                  <button className="chip" key={option} type="button" onClick={() => markBlank(option)}>
+                    {option}
+                  </button>
+                ))
+              ) : (
+                <small>Agregá primero opciones arrastrables para marcarlas como correctas.</small>
+              )}
             </div>
           </div>
           <DragPreview question={question} onChange={onChange} ocrText={draft.text} />
@@ -1302,7 +1320,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
   const [statement, setStatement] = useState("");
   const [options, setOptions] = useState<string[]>(emptyMc.options);
   const [correctAnswer, setCorrectAnswer] = useState("");
-  const [textPartsRaw, setTextPartsRaw] = useState("El | __blank__ | se visualiza en la linea de optimalidad");
+  const [textPartsRaw, setTextPartsRaw] = useState("El __blank__ se visualiza en la linea de optimalidad");
   const [draggableOptions, setDraggableOptions] = useState<string[]>(emptyDnd.draggableOptions);
   const [correctAnswers, setCorrectAnswers] = useState<string[]>(emptyDnd.correctAnswers);
   const [table, setTable] = useState<DragTable>(emptyTable.table);
@@ -1311,10 +1329,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
 
   const blankCount = useMemo(
     () =>
-      textPartsRaw
-        .split("|")
-        .map((part) => part.trim())
-        .filter((part) => part === "__blank__").length,
+      parseDragTextParts(textPartsRaw).filter((part) => part === "__blank__").length,
     [textPartsRaw]
   );
 
@@ -1327,7 +1342,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
       setOptions(["", ""]);
       setCorrectAnswer("");
     } else if (nextType === "drag_and_drop") {
-      setTextPartsRaw("El | __blank__ | se visualiza en la linea de optimalidad");
+      setTextPartsRaw("El __blank__ se visualiza en la linea de optimalidad");
       setDraggableOptions(["", "", ""]);
       setCorrectAnswers([""]);
     } else {
@@ -1345,7 +1360,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
       setOptions(question.options);
       setCorrectAnswer(question.correctAnswer);
     } else if (question.type === "drag_and_drop") {
-      setTextPartsRaw(question.textParts.join(" | "));
+      setTextPartsRaw(question.textParts.join(""));
       setDraggableOptions(question.draggableOptions);
       setCorrectAnswers(question.correctAnswers);
     } else {
@@ -1369,7 +1384,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
             ? {
                 type,
                 statement: statement.trim(),
-                textParts: textPartsRaw.split("|").map((part) => part.trim()).filter(Boolean),
+                textParts: parseDragTextParts(textPartsRaw),
                 draggableOptions: cleanList(draggableOptions),
                 correctAnswers: cleanList(correctAnswers)
               }
@@ -1497,20 +1512,33 @@ function MultipleChoiceEditor({
   onOptionsChange: (options: string[]) => void;
   onCorrectAnswerChange: (answer: string) => void;
 }) {
+  const normalizedOptions = cleanList(options);
+
   return (
     <>
       <ArrayEditor label="Opciones" values={options} minItems={2} onChange={onOptionsChange} />
-      <label>
-        Respuesta correcta
-        <select value={correctAnswer} onChange={(event) => onCorrectAnswerChange(event.target.value)}>
-          <option value="">Elegir opcion</option>
-          {cleanList(options).map((option) => (
-            <option value={option} key={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </label>
+      <div className="array-editor">
+        <div className="array-header">
+          <span>Respuesta correcta</span>
+        </div>
+        {normalizedOptions.length === 0 ? (
+          <small>Agregá opciones para elegir la respuesta correcta.</small>
+        ) : (
+          <div className="mc-answer-list">
+            {normalizedOptions.map((option, index) => (
+              <label className="mc-answer-item" key={`${option}-${index}`}>
+                <input
+                  checked={correctAnswer === option}
+                  name="correct-answer"
+                  type="radio"
+                  onChange={() => onCorrectAnswerChange(option)}
+                />
+                <span>{option}</span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 }
@@ -1532,15 +1560,65 @@ function DragDropEditor({
   onDraggableOptionsChange: (values: string[]) => void;
   onCorrectAnswersChange: (values: string[]) => void;
 }) {
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  function insertBlank() {
+    const token = "__blank__";
+    const textarea = textAreaRef.current;
+    const start = textarea?.selectionStart ?? textPartsRaw.length;
+    const end = textarea?.selectionEnd ?? textPartsRaw.length;
+    const before = textPartsRaw.slice(0, start);
+    const after = textPartsRaw.slice(end);
+    const spacerBefore = before.length > 0 && !/\s$/.test(before) ? " " : "";
+    const spacerAfter = after.length > 0 && !/^\s/.test(after) ? " " : "";
+    const insertion = `${spacerBefore}${token}${spacerAfter}`;
+    const nextValue = `${before}${insertion}${after}`;
+    const cursorPosition = before.length + insertion.length;
+
+    onTextPartsRawChange(nextValue);
+
+    requestAnimationFrame(() => {
+      if (!textarea) {
+        return;
+      }
+      textarea.focus();
+      textarea.setSelectionRange(cursorPosition, cursorPosition);
+    });
+  }
+
+  function onTextAreaKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if ((event.ctrlKey || event.metaKey) && !event.shiftKey && !event.altKey && event.key.toLowerCase() === "e") {
+      event.preventDefault();
+      insertBlank();
+    }
+  }
+
   return (
     <>
       <label>
         Frase con blanks
-        <textarea value={textPartsRaw} onChange={(event) => onTextPartsRawChange(event.target.value)} />
-        <small>Separá partes con | y usá __blank__ donde va un espacio. Blanks detectados: {blankCount}</small>
+        <textarea
+          ref={textAreaRef}
+          value={textPartsRaw}
+          onKeyDown={onTextAreaKeyDown}
+          onChange={(event) => onTextPartsRawChange(event.target.value)}
+        />
+        <div className="dnd-phrase-actions">
+          <button className="ghost-button" type="button" onClick={insertBlank}>
+            Agregar blank
+          </button>
+          <small>Atajo en este campo: Ctrl/Cmd + E</small>
+        </div>
+        <small>Escribí la frase normal y usá __blank__ para cada hueco. También funciona el formato con |. Blanks detectados: {blankCount}</small>
       </label>
       <ArrayEditor label="Opciones arrastrables" values={draggableOptions} minItems={1} onChange={onDraggableOptionsChange} />
-      <ArrayEditor label="Respuestas correctas en orden" values={correctAnswers} minItems={1} onChange={onCorrectAnswersChange} />
+      <ArrayEditor
+        label="Respuestas correctas en orden"
+        values={correctAnswers}
+        minItems={1}
+        clearWhenMinReached
+        onChange={onCorrectAnswersChange}
+      />
     </>
   );
 }
@@ -1723,11 +1801,13 @@ function ArrayEditor({
   label,
   values,
   minItems,
+  clearWhenMinReached = false,
   onChange
 }: {
   label: string;
   values: string[];
   minItems: number;
+  clearWhenMinReached?: boolean;
   onChange: (values: string[]) => void;
 }) {
   function update(index: number, value: string) {
@@ -1736,6 +1816,9 @@ function ArrayEditor({
 
   function remove(index: number) {
     if (values.length <= minItems) {
+      if (clearWhenMinReached) {
+        update(index, "");
+      }
       return;
     }
     onChange(values.filter((_, itemIndex) => itemIndex !== index));
@@ -1752,7 +1835,7 @@ function ArrayEditor({
       </div>
       {values.map((value, index) => (
         <div className="array-row" key={index}>
-          <input value={value} onChange={(event) => update(index, event.target.value)} placeholder={`${label} ${index + 1}`} />
+          <textarea rows={2} value={value} onChange={(event) => update(index, event.target.value)} placeholder={`${label} ${index + 1}`} />
           <button className="icon-button" type="button" onClick={() => remove(index)} aria-label="Eliminar item">
             <Trash2 size={16} />
           </button>
