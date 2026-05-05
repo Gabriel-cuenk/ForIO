@@ -1333,18 +1333,5 @@
     "correctAnswer": "Costo de oportunidad",
     "ocrText": "Si en el primal las variables de decision (reales) representan cantidad a producir sus asociadas en el dual representan\nSeleccione una:\na.\nSobrante de recurso\nb.\nSobrante de producción\nC.\nCosto de oportunidad\nd.\nValor marginal\nLa respuesta correcta es: Costo de oportunidad",
     "id": "1778002747461-b451da3f0d8338"
-  },
-  {
-    "type": "multiple_choice",
-    "statement": "La tabla óptima del dual es",
-    "options": [
-      "Igual a la óptima del primal",
-      "Igual a la traspuesta cambiada de signo (-AT) del primal",
-      "Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base",
-      "Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que están en la base"
-    ],
-    "correctAnswer": "Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base",
-    "ocrText": "La tabla óptima del dual es\nSeleccione una:\na. Igual a la óptima del primal\nb. Igual a la traspuesta cambiada de signo (-AT) del primal\nC. Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base\nd. Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que están en la base\nLa respuesta correcta es: Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base",
-    "id": "1778002764034-c17b5f7bf7e608"
   }
 ]
