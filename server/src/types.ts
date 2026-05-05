@@ -1,4 +1,18 @@
-export type QuestionType = "multiple_choice" | "drag_and_drop";
+export type QuestionType = "multiple_choice" | "drag_and_drop" | "table_drag_and_drop";
+
+export type TableCell = {
+  row: number;
+  col: number;
+  content: string;
+  isBlank: boolean;
+  correctAnswer?: string;
+};
+
+export type DragTable = {
+  rows: number;
+  columns: number;
+  cells: TableCell[];
+};
 
 export type MultipleChoiceQuestion = {
   id: string;
@@ -19,6 +33,18 @@ export type DragAndDropQuestion = {
   ocrText?: string;
 };
 
-export type Question = MultipleChoiceQuestion | DragAndDropQuestion;
+export type TableDragAndDropQuestion = {
+  id: string;
+  type: "table_drag_and_drop";
+  statement: string;
+  table: DragTable;
+  draggableOptions: string[];
+  ocrText?: string;
+};
 
-export type QuestionInput = Omit<Question, "id"> & { id?: string };
+export type Question = MultipleChoiceQuestion | DragAndDropQuestion | TableDragAndDropQuestion;
+
+export type QuestionInput =
+  | (Omit<MultipleChoiceQuestion, "id"> & { id?: string })
+  | (Omit<DragAndDropQuestion, "id"> & { id?: string })
+  | (Omit<TableDragAndDropQuestion, "id"> & { id?: string });

@@ -62,5 +62,139 @@
       "recurso",
       "restricciones"
     ]
+  },
+  {
+    "id": "4",
+    "type": "table_drag_and_drop",
+    "statement": "La tabla óptima del simplex dual de un problema primal de maximización se arma con:",
+    "table": {
+      "rows": 4,
+      "columns": 4,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "By"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Coeficientes de Var.Base"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Variables reales primal"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "content": "Z",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "content": "Fila 1",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Vector Base"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Variables slack primal"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Valores de Var.Base"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "content": "Fila 2",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "costo de oportunidad"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "valor marginal"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "content": "0",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "content": "G",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "G"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "content": "-",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "content": "-",
+          "isBlank": false,
+          "correctAnswer": ""
+        }
+      ]
+    },
+    "draggableOptions": [
+      "By",
+      "Coeficientes de Var.Base",
+      "Variables slack primal",
+      "Valores de Var.Base",
+      "G",
+      "Vector Base",
+      "costo de oportunidad",
+      "valor marginal",
+      "Variables reales primal"
+    ]
   }
 ]

@@ -57,6 +57,33 @@ function validateQuestion(input: QuestionInput): string | null {
     return null;
   }
 
+  if (input.type === "table_drag_and_drop") {
+    if (!input.table || input.table.rows < 1 || input.table.columns < 1) {
+      return "La tabla necesita al menos 1 fila y 1 columna.";
+    }
+    if (!Array.isArray(input.table.cells) || input.table.cells.length !== input.table.rows * input.table.columns) {
+      return "La cantidad de celdas debe coincidir con filas por columnas.";
+    }
+    const blanks = input.table.cells.filter((cell) => cell.isBlank);
+    if (blanks.length === 0) {
+      return "La tabla necesita al menos una celda vacia.";
+    }
+    for (const cell of blanks) {
+      if (!cell.correctAnswer?.trim()) {
+        return "Cada celda vacia necesita una respuesta correcta.";
+      }
+    }
+    if (!Array.isArray(input.draggableOptions) || input.draggableOptions.length < blanks.length) {
+      return "Agrega opciones arrastrables suficientes para la tabla.";
+    }
+    for (const cell of blanks) {
+      if (!input.draggableOptions.includes(cell.correctAnswer ?? "")) {
+        return "Cada respuesta correcta de tabla debe estar incluida en las opciones arrastrables.";
+      }
+    }
+    return null;
+  }
+
   return "Tipo de pregunta no soportado.";
 }
 

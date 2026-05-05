@@ -25,7 +25,16 @@ import {
 } from "./api";
 import type { OcrUploadResult } from "./api";
 import DragDropAnswer from "./components/DragDropAnswer";
-import type { DragAndDropQuestion, MultipleChoiceQuestion, Question, QuestionInput, QuestionType } from "./types/questions";
+import TableDragDropAnswer, { cellKey } from "./components/TableDragDropAnswer";
+import type {
+  DragAndDropQuestion,
+  DragTable,
+  MultipleChoiceQuestion,
+  Question,
+  QuestionInput,
+  QuestionType,
+  TableDragAndDropQuestion
+} from "./types/questions";
 
 const emptyMc: Omit<MultipleChoiceQuestion, "id"> = {
   type: "multiple_choice",
@@ -42,8 +51,47 @@ const emptyDnd: Omit<DragAndDropQuestion, "id"> = {
   correctAnswers: [""]
 };
 
+const emptyTable: Omit<TableDragAndDropQuestion, "id"> = {
+  type: "table_drag_and_drop",
+  statement: "",
+  table: makeEmptyTable(3, 3),
+  draggableOptions: ["", "", ""]
+};
+
 function cleanList(values: string[]) {
   return values.map((value) => value.trim()).filter(Boolean);
+}
+
+function makeEmptyTable(rows: number, columns: number): DragTable {
+  return {
+    rows,
+    columns,
+    cells: Array.from({ length: rows * columns }, (_, index) => ({
+      row: Math.floor(index / columns),
+      col: index % columns,
+      content: "",
+      isBlank: false,
+      correctAnswer: ""
+    }))
+  };
+}
+
+function tableBlankCells(table: DragTable) {
+  return table.cells.filter((cell) => cell.isBlank);
+}
+
+function normalizeQuestionInput(question: QuestionInput): QuestionInput {
+  if (question.type !== "table_drag_and_drop") {
+    return question;
+  }
+
+  return {
+    ...question,
+    draggableOptions: cleanList([
+      ...question.draggableOptions,
+      ...tableBlankCells(question.table).map((cell) => cell.correctAnswer ?? "")
+    ])
+  };
 }
 
 type ImportDraft = OcrUploadResult & {
@@ -121,6 +169,8 @@ function PracticePage({ questions }: { questions: Question[] }) {
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState("");
   const [dndAnswers, setDndAnswers] = useState<string[]>([]);
+  const [tableAnswers, setTableAnswers] = useState<Record<string, string>>({});
+  const [tableResults, setTableResults] = useState<Record<string, boolean>>({});
   const [checked, setChecked] = useState<null | boolean>(null);
   const question = questions[index];
   const isFinished = index >= questions.length;
@@ -128,6 +178,8 @@ function PracticePage({ questions }: { questions: Question[] }) {
   function resetAnswer() {
     setSelected("");
     setDndAnswers([]);
+    setTableAnswers({});
+    setTableResults({});
     setChecked(null);
   }
 
@@ -142,10 +194,23 @@ function PracticePage({ questions }: { questions: Question[] }) {
       return;
     }
 
-    const isCorrect =
-      question.type === "multiple_choice"
-        ? selected === question.correctAnswer
-        : question.correctAnswers.every((answer, answerIndex) => dndAnswers[answerIndex] === answer);
+    let isCorrect = false;
+    if (question.type === "multiple_choice") {
+      isCorrect = selected === question.correctAnswer;
+    }
+    if (question.type === "drag_and_drop") {
+      isCorrect = question.correctAnswers.every((answer, answerIndex) => dndAnswers[answerIndex] === answer);
+    }
+    if (question.type === "table_drag_and_drop") {
+      const results = Object.fromEntries(
+        tableBlankCells(question.table).map((cell) => {
+          const key = cellKey(cell.row, cell.col);
+          return [key, tableAnswers[key] === cell.correctAnswer];
+        })
+      );
+      setTableResults(results);
+      isCorrect = Object.values(results).every(Boolean);
+    }
 
     setChecked(isCorrect);
     if (isCorrect) {
@@ -183,7 +248,12 @@ function PracticePage({ questions }: { questions: Question[] }) {
     );
   }
 
-  const canValidate = question.type === "multiple_choice" ? Boolean(selected) : dndAnswers.filter(Boolean).length === question.correctAnswers.length;
+  const canValidate =
+    question.type === "multiple_choice"
+      ? Boolean(selected)
+      : question.type === "drag_and_drop"
+        ? dndAnswers.filter(Boolean).length === question.correctAnswers.length
+        : tableBlankCells(question.table).every((cell) => Boolean(tableAnswers[cellKey(cell.row, cell.col)]));
 
   return (
     <main className="main">
@@ -211,13 +281,22 @@ function PracticePage({ questions }: { questions: Question[] }) {
               </button>
             ))}
           </div>
-        ) : (
+        ) : question.type === "drag_and_drop" ? (
           <DragDropAnswer
             key={question.id}
             textParts={question.textParts}
             options={question.draggableOptions}
             disabled={checked !== null}
             onChange={setDndAnswers}
+          />
+        ) : (
+          <TableDragDropAnswer
+            key={question.id}
+            table={question.table}
+            options={question.draggableOptions}
+            disabled={checked !== null}
+            results={checked !== null ? tableResults : undefined}
+            onChange={setTableAnswers}
           />
         )}
 
@@ -241,7 +320,14 @@ function PracticePage({ questions }: { questions: Question[] }) {
 }
 
 function Feedback({ question, isCorrect }: { question: Question; isCorrect: boolean }) {
-  const correctText = question.type === "multiple_choice" ? question.correctAnswer : question.correctAnswers.join(" / ");
+  const correctText =
+    question.type === "multiple_choice"
+      ? question.correctAnswer
+      : question.type === "drag_and_drop"
+        ? question.correctAnswers.join(" / ")
+        : tableBlankCells(question.table)
+            .map((cell) => `(${cell.row + 1},${cell.col + 1}) ${cell.correctAnswer}`)
+            .join(" / ");
   return (
     <div className={`feedback ${isCorrect ? "correct" : "incorrect"}`}>
       {isCorrect ? <CheckCircle2 size={22} /> : <XCircle size={22} />}
@@ -309,7 +395,7 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
     setBusy(true);
     setMessage("");
     try {
-      await createQuestionsBulk(drafts.map((draft) => ({ ...draft.parsedQuestion, ocrText: draft.text })));
+      await createQuestionsBulk(drafts.map((draft) => normalizeQuestionInput({ ...draft.parsedQuestion, ocrText: draft.text })));
       await onSaved();
       setDrafts([]);
       setMessage("Preguntas importadas al banco.");
@@ -395,14 +481,36 @@ function ImportDraftEditor({
       onChange({
         type: "multiple_choice",
         statement: question.statement,
-        options: question.type === "drag_and_drop" ? question.draggableOptions : question.options,
-        correctAnswer: question.type === "drag_and_drop" ? question.correctAnswers[0] ?? "" : question.correctAnswer,
+        options: question.type === "multiple_choice" ? question.options : question.draggableOptions,
+        correctAnswer:
+          question.type === "multiple_choice"
+            ? question.correctAnswer
+            : question.type === "drag_and_drop"
+              ? question.correctAnswers[0] ?? ""
+              : tableBlankCells(question.table)[0]?.correctAnswer ?? "",
         ocrText: draft.text
       });
       return;
     }
 
-    const answer = question.type === "multiple_choice" ? question.correctAnswer : question.correctAnswers[0] ?? "";
+    if (nextType === "table_drag_and_drop") {
+      const sourceOptions = question.type === "multiple_choice" ? question.options : question.draggableOptions;
+      onChange({
+        type: "table_drag_and_drop",
+        statement: question.statement,
+        table: makeEmptyTable(4, 4),
+        draggableOptions: sourceOptions.length > 0 ? sourceOptions : ["By", "Vector Base", "costo de oportunidad", "valor marginal"],
+        ocrText: draft.text
+      });
+      return;
+    }
+
+    const answer =
+      question.type === "multiple_choice"
+        ? question.correctAnswer
+        : question.type === "drag_and_drop"
+          ? question.correctAnswers[0] ?? ""
+          : tableBlankCells(question.table)[0]?.correctAnswer ?? "";
     onChange({
       type: "drag_and_drop",
       statement: question.statement,
@@ -460,6 +568,9 @@ function ImportDraftEditor({
         <button className={question.type === "drag_and_drop" ? "active" : ""} type="button" onClick={() => setType("drag_and_drop")}>
           Drag and drop
         </button>
+        <button className={question.type === "table_drag_and_drop" ? "active" : ""} type="button" onClick={() => setType("table_drag_and_drop")}>
+          Tabla
+        </button>
       </div>
 
       <label>
@@ -474,7 +585,7 @@ function ImportDraftEditor({
           onOptionsChange={(options) => onChange({ ...question, options, ocrText: draft.text })}
           onCorrectAnswerChange={(correctAnswer) => onChange({ ...question, correctAnswer, ocrText: draft.text })}
         />
-      ) : (
+      ) : question.type === "drag_and_drop" ? (
         <>
           <DragDropEditor
             textPartsRaw={textPartsRaw}
@@ -503,6 +614,13 @@ function ImportDraftEditor({
           </div>
           <DragPreview question={question} onChange={onChange} ocrText={draft.text} />
         </>
+      ) : (
+        <TableQuestionEditor
+          table={question.table}
+          options={question.draggableOptions}
+          onTableChange={(table) => onChange({ ...question, table, ocrText: draft.text })}
+          onOptionsChange={(draggableOptions) => onChange({ ...question, draggableOptions, ocrText: draft.text })}
+        />
       )}
     </article>
   );
@@ -572,6 +690,16 @@ function uniqueWords(text: string) {
   );
 }
 
+function questionTypeLabel(type: QuestionType) {
+  if (type === "multiple_choice") {
+    return "Multiple choice";
+  }
+  if (type === "drag_and_drop") {
+    return "Drag and drop";
+  }
+  return "Tabla drag";
+}
+
 function AdminPage({ questions, onChange }: { questions: Question[]; onChange: () => Promise<void> }) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [type, setType] = useState<QuestionType>("multiple_choice");
@@ -581,6 +709,8 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
   const [textPartsRaw, setTextPartsRaw] = useState("El | __blank__ | se visualiza en la linea de optimalidad");
   const [draggableOptions, setDraggableOptions] = useState<string[]>(emptyDnd.draggableOptions);
   const [correctAnswers, setCorrectAnswers] = useState<string[]>(emptyDnd.correctAnswers);
+  const [table, setTable] = useState<DragTable>(emptyTable.table);
+  const [tableOptions, setTableOptions] = useState<string[]>(emptyTable.draggableOptions);
   const [message, setMessage] = useState("");
 
   const blankCount = useMemo(
@@ -600,10 +730,13 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
     if (nextType === "multiple_choice") {
       setOptions(["", ""]);
       setCorrectAnswer("");
-    } else {
+    } else if (nextType === "drag_and_drop") {
       setTextPartsRaw("El | __blank__ | se visualiza en la linea de optimalidad");
       setDraggableOptions(["", "", ""]);
       setCorrectAnswers([""]);
+    } else {
+      setTable(makeEmptyTable(3, 3));
+      setTableOptions(["", "", ""]);
     }
   }
 
@@ -615,10 +748,13 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
     if (question.type === "multiple_choice") {
       setOptions(question.options);
       setCorrectAnswer(question.correctAnswer);
-    } else {
+    } else if (question.type === "drag_and_drop") {
       setTextPartsRaw(question.textParts.join(" | "));
       setDraggableOptions(question.draggableOptions);
       setCorrectAnswers(question.correctAnswers);
+    } else {
+      setTable(question.table);
+      setTableOptions(question.draggableOptions);
     }
   }
 
@@ -633,18 +769,25 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
               options: cleanList(options),
               correctAnswer: correctAnswer.trim()
             }
-          : {
-              type,
-              statement: statement.trim(),
-              textParts: textPartsRaw.split("|").map((part) => part.trim()).filter(Boolean),
-              draggableOptions: cleanList(draggableOptions),
-              correctAnswers: cleanList(correctAnswers)
-            };
+          : type === "drag_and_drop"
+            ? {
+                type,
+                statement: statement.trim(),
+                textParts: textPartsRaw.split("|").map((part) => part.trim()).filter(Boolean),
+                draggableOptions: cleanList(draggableOptions),
+                correctAnswers: cleanList(correctAnswers)
+              }
+            : {
+                type,
+                statement: statement.trim(),
+                table,
+                draggableOptions: cleanList([...tableOptions, ...tableBlankCells(table).map((cell) => cell.correctAnswer ?? "")])
+              };
 
       if (editingId) {
-        await updateQuestion(editingId, payload);
+        await updateQuestion(editingId, normalizeQuestionInput(payload));
       } else {
-        await createQuestion(payload);
+        await createQuestion(normalizeQuestionInput(payload));
       }
 
       await onChange();
@@ -681,6 +824,9 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
           <button className={type === "drag_and_drop" ? "active" : ""} type="button" onClick={() => resetForm("drag_and_drop")}>
             Drag and drop
           </button>
+          <button className={type === "table_drag_and_drop" ? "active" : ""} type="button" onClick={() => resetForm("table_drag_and_drop")}>
+            Tabla
+          </button>
         </div>
 
         <label>
@@ -695,7 +841,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
             onOptionsChange={setOptions}
             onCorrectAnswerChange={setCorrectAnswer}
           />
-        ) : (
+        ) : type === "drag_and_drop" ? (
           <DragDropEditor
             textPartsRaw={textPartsRaw}
             draggableOptions={draggableOptions}
@@ -705,6 +851,8 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
             onDraggableOptionsChange={setDraggableOptions}
             onCorrectAnswersChange={setCorrectAnswers}
           />
+        ) : (
+          <TableQuestionEditor table={table} options={tableOptions} onTableChange={setTable} onOptionsChange={setTableOptions} />
         )}
 
         {message ? <p className="form-message">{message}</p> : null}
@@ -720,7 +868,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
           {questions.map((question) => (
             <article className="question-item" key={question.id}>
               <div>
-                <span className="type-pill">{question.type === "multiple_choice" ? "Multiple choice" : "Drag and drop"}</span>
+                <span className="type-pill">{questionTypeLabel(question.type)}</span>
                 <h2>{question.statement}</h2>
               </div>
               <div className="item-actions">
@@ -795,6 +943,127 @@ function DragDropEditor({
       <ArrayEditor label="Opciones arrastrables" values={draggableOptions} minItems={1} onChange={onDraggableOptionsChange} />
       <ArrayEditor label="Respuestas correctas en orden" values={correctAnswers} minItems={1} onChange={onCorrectAnswersChange} />
     </>
+  );
+}
+
+function TableQuestionEditor({
+  table,
+  options,
+  onTableChange,
+  onOptionsChange
+}: {
+  table: DragTable;
+  options: string[];
+  onTableChange: (table: DragTable) => void;
+  onOptionsChange: (options: string[]) => void;
+}) {
+  function resize(rows: number, columns: number) {
+    const safeRows = Math.max(1, rows);
+    const safeColumns = Math.max(1, columns);
+    const cells = Array.from({ length: safeRows * safeColumns }, (_, index) => {
+      const row = Math.floor(index / safeColumns);
+      const col = index % safeColumns;
+      return (
+        table.cells.find((cell) => cell.row === row && cell.col === col) ?? {
+          row,
+          col,
+          content: "",
+          isBlank: false,
+          correctAnswer: ""
+        }
+      );
+    });
+    onTableChange({ rows: safeRows, columns: safeColumns, cells });
+  }
+
+  function updateCell(row: number, col: number, patch: Partial<DragTable["cells"][number]>) {
+    onTableChange({
+      ...table,
+      cells: table.cells.map((cell) => (cell.row === row && cell.col === col ? { ...cell, ...patch } : cell))
+    });
+  }
+
+  return (
+    <>
+      <div className="dimension-grid">
+        <label>
+          Filas
+          <input min={1} type="number" value={table.rows} onChange={(event) => resize(Number(event.target.value), table.columns)} />
+        </label>
+        <label>
+          Columnas
+          <input min={1} type="number" value={table.columns} onChange={(event) => resize(table.rows, Number(event.target.value))} />
+        </label>
+      </div>
+
+      <div className="table-editor-wrap">
+        <table className="table-editor">
+          <tbody>
+            {Array.from({ length: table.rows }, (_, row) => (
+              <tr key={row}>
+                {Array.from({ length: table.columns }, (_, col) => {
+                  const cell = table.cells.find((item) => item.row === row && item.col === col)!;
+                  return (
+                    <td key={`${row}-${col}`}>
+                      <label className="cell-toggle">
+                        <input
+                          checked={cell.isBlank}
+                          type="checkbox"
+                          onChange={(event) => updateCell(row, col, { isBlank: event.target.checked })}
+                        />
+                        Blank
+                      </label>
+                      {cell.isBlank ? (
+                        <input
+                          value={cell.correctAnswer ?? ""}
+                          onChange={(event) => updateCell(row, col, { correctAnswer: event.target.value, content: "" })}
+                          placeholder="Respuesta correcta"
+                        />
+                      ) : (
+                        <input
+                          value={cell.content}
+                          onChange={(event) => updateCell(row, col, { content: event.target.value, correctAnswer: "" })}
+                          placeholder="Contenido fijo"
+                        />
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ArrayEditor label="Opciones arrastrables y distractores" values={options} minItems={1} onChange={onOptionsChange} />
+      <TablePreview table={table} />
+    </>
+  );
+}
+
+function TablePreview({ table }: { table: DragTable }) {
+  return (
+    <div className="preview-panel">
+      <strong>Vista previa de tabla</strong>
+      <div className="study-table-wrap">
+        <table className="study-table">
+          <tbody>
+            {Array.from({ length: table.rows }, (_, row) => (
+              <tr key={row}>
+                {Array.from({ length: table.columns }, (_, col) => {
+                  const cell = table.cells.find((item) => item.row === row && item.col === col);
+                  return (
+                    <td className={cell?.isBlank ? "table-blank-cell" : ""} key={`${row}-${col}`}>
+                      {cell?.isBlank ? <span className="blank-placeholder">{cell.correctAnswer || "blank"}</span> : cell?.content}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 

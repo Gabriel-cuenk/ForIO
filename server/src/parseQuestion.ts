@@ -68,13 +68,46 @@ function makeMultipleChoiceSuggestion(text: string, lines: string[]): QuestionIn
   const options = unique(detectOptionLines(lines));
   const statementLines = lines.filter((line) => !optionPattern.test(line) && !correctPattern.test(line));
   const statement = statementLines[0] ?? lines[0] ?? "Pregunta importada";
-  const correctAnswer = detectCorrectAnswer(lines, options);
+  const correctAnswer = detectCorrectAnswer(lines, options) || options[0] || "opcion correcta";
+  const safeOptions = unique([...options, correctAnswer]).filter(Boolean);
 
   return {
     type: "multiple_choice",
     statement,
-    options: options.length >= 2 ? options : unique([correctAnswer, "opcion falsa 1", "opcion falsa 2"]),
-    correctAnswer: correctAnswer || options[0] || "opcion correcta",
+    options: safeOptions.length >= 2 ? safeOptions : unique([correctAnswer, "opcion falsa 1", "opcion falsa 2"]),
+    correctAnswer,
+    ocrText: text
+  };
+}
+
+function makeTableSuggestion(text: string, lines: string[]): QuestionInput {
+  const options = unique([...detectOptionLines(lines), ...lines.filter((line) => line.length <= 40)]).slice(0, 12);
+  const baseOptions = options.length > 0 ? options : ["By", "Vector Base", "costo de oportunidad", "valor marginal"];
+  const rows = 4;
+  const columns = 4;
+  const cells = Array.from({ length: rows * columns }, (_, index) => {
+    const row = Math.floor(index / columns);
+    const col = index % columns;
+    const option = baseOptions[index] ?? "";
+    const blankAnswer = baseOptions[col] ?? baseOptions[0] ?? "";
+    return {
+      row,
+      col,
+      content: index < columns ? option : "",
+      isBlank: index >= columns && index < columns + Math.min(baseOptions.length, columns),
+      correctAnswer: index >= columns && index < columns + Math.min(baseOptions.length, columns) ? blankAnswer : ""
+    };
+  });
+
+  return {
+    type: "table_drag_and_drop",
+    statement: lines[0] ?? "Completar la tabla:",
+    table: {
+      rows,
+      columns,
+      cells
+    },
+    draggableOptions: baseOptions,
     ocrText: text
   };
 }
@@ -88,6 +121,11 @@ export function parseQuestionFromOcr(text: string): QuestionInput {
   const shouldBeDrag =
     /__+|completar|complete|arrastr|drag|drop|blank|espacio|cajas/i.test(text) &&
     !/^[A-Da-d][\).:-]/m.test(text);
+  const shouldBeTable = /tabla|simplex|celda|cuadro|fila|columna|vector base|slack|by\b|var\.?base/i.test(text);
+
+  if (shouldBeTable) {
+    return makeTableSuggestion(text, lines);
+  }
 
   if (shouldBeDrag) {
     return makeDragSuggestion(text, lines);
