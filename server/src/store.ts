@@ -21,6 +21,36 @@ async function readQuestions(): Promise<Question[]> {
 }
 
 async function writeQuestions(questions: Question[]) {
+  const backupsDir = path.resolve(__dirname, "../data/backups");
+  try {
+    await fs.mkdir(backupsDir, { recursive: true });
+    // if there is an existing data file, copy it to backups before overwriting
+    try {
+      const current = await fs.readFile(dataFile, "utf-8");
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const backupFile = path.resolve(backupsDir, `questions-${timestamp}.json`);
+      await fs.writeFile(backupFile, current, "utf-8");
+
+      // keep only the latest 10 backups
+      const files = await fs.readdir(backupsDir);
+      const backups = files.filter((f) => f.startsWith("questions-") && f.endsWith(".json")).sort();
+      const keep = 10;
+      if (backups.length > keep) {
+        const toRemove = backups.slice(0, backups.length - keep);
+        await Promise.all(toRemove.map((f) => fs.unlink(path.resolve(backupsDir, f))));
+      }
+    } catch (err) {
+      if (!(isNodeError(err) && err.code === "ENOENT")) {
+        // ignore missing data file, rethrow others
+        throw err;
+      }
+    }
+  } catch (err) {
+    // if backup writing fails, proceed to write main file but log to console
+    // eslint-disable-next-line no-console
+    console.error("No se pudo crear backup de questions.json:", err instanceof Error ? err.message : err);
+  }
+
   await fs.writeFile(dataFile, JSON.stringify(questions, null, 2), "utf-8");
 }
 

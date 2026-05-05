@@ -232,3 +232,32 @@ El archivo `server/data/questions.json` ya trae preguntas de Programacion Lineal
 - 1 tabla con drag and drop
 
 Podés editar ese JSON a mano o usar `/admin`.
+
+## Backups y comandos útiles
+
+El servidor guarda automáticamente backups cuando se sobrescribe `server/data/questions.json` y los coloca en `server/data/backups/`.
+
+Comando para crear un backup manualmente (rápido):
+
+```bash
+# desde la raíz del repo
+npm --prefix server run backup
+```
+
+Comando para restaurar el backup más reciente:
+
+```bash
+npm --prefix server run restore-latest
+```
+
+Comando para crear el archivo activo a partir del ejemplo (si existe `questions.example.json`):
+
+```bash
+# Unix / macOS
+cp server/data/questions.example.json server/data/questions.json
+
+# Windows PowerShell
+Copy-Item server/data/questions.example.json server/data/questions.json
+```
+
+Si querés que automatice además la creación de `server/data/questions.example.json` desde el estado actual o agrege `seed` en `server/package.json`, avisame y lo dejo listo.
