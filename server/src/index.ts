@@ -1,8 +1,8 @@
-import "dotenv/config";
+import "./env.js";
 import cors from "cors";
 import express from "express";
 import multer from "multer";
-import { createOcrProvider } from "./ocrProvider.js";
+import { createOcrProvider, getOcrStatus } from "./ocrProvider.js";
 import { parseQuestionFromOcr } from "./parseQuestion.js";
 import { createQuestion, createQuestionsBulk, deleteQuestion, getQuestions, updateQuestion } from "./store.js";
 
@@ -25,6 +25,10 @@ app.get("/api/questions", async (_req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+app.get("/api/ocr/status", (_req, res) => {
+  res.json(getOcrStatus());
 });
 
 app.post("/api/questions", async (req, res) => {
@@ -61,7 +65,11 @@ app.post("/api/ocr/upload", upload.array("images"), async (req, res) => {
     const provider = createOcrProvider();
     const results = await Promise.all(
       files.map(async (file) => {
+        console.log(`[OCR] Procesando ${file.originalname} con provider=${getOcrStatus().provider}`);
         const ocr = await provider.recognize(file.buffer);
+        console.log(
+          `[OCR] ${file.originalname} listo provider=${ocr.provider} lineas=${ocr.lines.length} confidence=${ocr.confidence?.toFixed(1) ?? "n/a"}`
+        );
         const parsedQuestion = parseQuestionFromOcr(ocr.text);
         return {
           filename: file.originalname,

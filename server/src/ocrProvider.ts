@@ -22,6 +22,22 @@ export interface OcrProvider {
   recognize(image: Buffer): Promise<OcrResult>;
 }
 
+export function getOcrProviderName() {
+  return process.env.OCR_PROVIDER ?? "tesseract";
+}
+
+export function getOcrStatus() {
+  const provider = getOcrProviderName();
+  const missingAwsCredentials = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION"].filter((key) => !process.env[key]);
+
+  return {
+    provider,
+    fallbackToTesseract: process.env.OCR_FALLBACK_TO_TESSERACT === "true",
+    awsTextractReady: provider !== "aws-textract" || missingAwsCredentials.length === 0,
+    missingAwsCredentials: provider === "aws-textract" ? missingAwsCredentials : []
+  };
+}
+
 class TesseractOcrProvider implements OcrProvider {
   async recognize(image: Buffer): Promise<OcrResult> {
     const worker = await createWorker("spa+eng");
@@ -126,7 +142,7 @@ function average(values: number[]) {
 }
 
 export function createOcrProvider(): OcrProvider {
-  const provider = process.env.OCR_PROVIDER ?? "tesseract";
+  const provider = getOcrProviderName();
 
   if (provider === "tesseract") {
     return new TesseractOcrProvider();

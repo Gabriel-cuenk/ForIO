@@ -6,6 +6,7 @@ export type TableCell = {
   content: string;
   isBlank: boolean;
   correctAnswer?: string;
+  acceptedAnswers?: string[];
 };
 
 export type DragTable = {

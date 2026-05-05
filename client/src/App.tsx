@@ -20,11 +20,13 @@ import {
   createQuestionsBulk,
   deleteQuestion,
   getQuestions,
+  getOcrStatus,
   parseQuestionFromText,
   updateQuestion,
   uploadOcrImages
 } from "./api";
 import type { OcrUploadResult } from "./api";
+import type { OcrStatus } from "./api";
 import DragDropAnswer from "./components/DragDropAnswer";
 import TableDragDropAnswer, { cellKey } from "./components/TableDragDropAnswer";
 import type {
@@ -81,22 +83,42 @@ function tableBlankCells(table: DragTable) {
   return table.cells.filter((cell) => cell.isBlank);
 }
 
+function normalizeAnswer(value = "") {
+  return value.trim().toLowerCase();
+}
+
+function isAcceptedTableAnswer(answer = "", correctAnswer = "", acceptedAnswers: string[] = []) {
+  const normalizedAnswer = normalizeAnswer(answer);
+  return [correctAnswer, ...acceptedAnswers].some((accepted) => normalizeAnswer(accepted) === normalizedAnswer);
+}
+
 function normalizeQuestionInput(question: QuestionInput): QuestionInput {
   if (question.type !== "table_drag_and_drop") {
     return question;
   }
 
   return {
-    ...question,
-    draggableOptions: cleanList([
-      ...question.draggableOptions,
-      ...tableBlankCells(question.table).map((cell) => cell.correctAnswer ?? "")
-    ])
-  };
-}
+      ...question,
+      draggableOptions: cleanList([
+        ...question.draggableOptions,
+        ...tableBlankCells(question.table).flatMap((cell) => [cell.correctAnswer ?? "", ...(cell.acceptedAnswers ?? [])])
+      ])
+    };
+  }
 
 type ImportDraft = OcrUploadResult & {
   id: string;
+};
+
+type TableImportBuilder = {
+  statement: string;
+  table: DragTable;
+  options: string[];
+  detectedAnswers: Array<{
+    primary: string;
+    alternatives: string[];
+  }>;
+  nextAnswerIndex: number;
 };
 
 export default function App() {
@@ -109,12 +131,25 @@ export default function App() {
     setLoading(true);
     setError("");
     try {
-      setQuestions(await getQuestions());
+      setQuestions(await getQuestionsWithRetry());
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "No se pudieron cargar las preguntas.");
     } finally {
       setLoading(false);
     }
+  }
+
+  async function getQuestionsWithRetry() {
+    let lastError: unknown;
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      try {
+        return await getQuestions();
+      } catch (error) {
+        lastError = error;
+        await new Promise((resolve) => window.setTimeout(resolve, 450 * (attempt + 1)));
+      }
+    }
+    throw lastError;
   }
 
   useEffect(() => {
@@ -153,7 +188,16 @@ export default function App() {
       </header>
 
       {loading ? <main className="main">Cargando preguntas...</main> : null}
-      {error ? <main className="main error-box">{error}</main> : null}
+      {error ? (
+        <main className="main error-box">
+          <h1>No pude cargar las preguntas</h1>
+          <p>{error}</p>
+          <button className="primary-button" type="button" onClick={loadQuestions}>
+            <RotateCcw size={18} />
+            Reintentar
+          </button>
+        </main>
+      ) : null}
       {!loading && !error && path === "/admin/import" ? (
         <ImportPage onSaved={loadQuestions} />
       ) : null}
@@ -166,6 +210,7 @@ export default function App() {
 }
 
 function PracticePage({ questions }: { questions: Question[] }) {
+  const [practiceQuestions, setPracticeQuestions] = useState<Question[] | null>(null);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState("");
@@ -173,8 +218,9 @@ function PracticePage({ questions }: { questions: Question[] }) {
   const [tableAnswers, setTableAnswers] = useState<Record<string, string>>({});
   const [tableResults, setTableResults] = useState<Record<string, boolean>>({});
   const [checked, setChecked] = useState<null | boolean>(null);
-  const question = questions[index];
-  const isFinished = index >= questions.length;
+  const activeQuestions = practiceQuestions ?? [];
+  const question = activeQuestions[index];
+  const isFinished = index >= activeQuestions.length;
 
   function resetAnswer() {
     setSelected("");
@@ -185,6 +231,20 @@ function PracticePage({ questions }: { questions: Question[] }) {
   }
 
   function restart() {
+    setIndex(0);
+    setScore(0);
+    resetAnswer();
+  }
+
+  function startPractice(nextQuestions: Question[]) {
+    setPracticeQuestions(nextQuestions);
+    setIndex(0);
+    setScore(0);
+    resetAnswer();
+  }
+
+  function backToPicker() {
+    setPracticeQuestions(null);
     setIndex(0);
     setScore(0);
     resetAnswer();
@@ -206,7 +266,7 @@ function PracticePage({ questions }: { questions: Question[] }) {
       const results = Object.fromEntries(
         tableBlankCells(question.table).map((cell) => {
           const key = cellKey(cell.row, cell.col);
-          return [key, tableAnswers[key] === cell.correctAnswer];
+          return [key, isAcceptedTableAnswer(tableAnswers[key], cell.correctAnswer, cell.acceptedAnswers)];
         })
       );
       setTableResults(results);
@@ -233,17 +293,24 @@ function PracticePage({ questions }: { questions: Question[] }) {
     );
   }
 
+  if (!practiceQuestions) {
+    return <PracticePicker questions={questions} onStart={startPractice} />;
+  }
+
   if (isFinished) {
     return (
       <main className="main result-panel">
         <h1>Resumen final</h1>
         <p className="score-big">
-          {score}/{questions.length}
+          {score}/{activeQuestions.length}
         </p>
-        <p>Respondiste correctamente el {Math.round((score / questions.length) * 100)}%.</p>
+        <p>Respondiste correctamente el {Math.round((score / activeQuestions.length) * 100)}%.</p>
         <button className="primary-button" type="button" onClick={restart}>
           <RotateCcw size={18} />
           Reiniciar quiz
+        </button>
+        <button className="ghost-button" type="button" onClick={backToPicker}>
+          Elegir otras preguntas
         </button>
       </main>
     );
@@ -261,7 +328,7 @@ function PracticePage({ questions }: { questions: Question[] }) {
       <section className="quiz-card">
         <div className="quiz-meta">
           <span>
-            Pregunta {index + 1} de {questions.length}
+            Pregunta {index + 1} de {activeQuestions.length}
           </span>
           <strong>Puntaje: {score}</strong>
         </div>
@@ -316,6 +383,11 @@ function PracticePage({ questions }: { questions: Question[] }) {
           )}
         </div>
       </section>
+      <div className="practice-footer">
+        <button className="ghost-button" type="button" onClick={backToPicker}>
+          Elegir preguntas
+        </button>
+      </div>
     </main>
   );
 }
@@ -327,7 +399,7 @@ function Feedback({ question, isCorrect }: { question: Question; isCorrect: bool
       : question.type === "drag_and_drop"
         ? question.correctAnswers.join(" / ")
         : tableBlankCells(question.table)
-            .map((cell) => `(${cell.row + 1},${cell.col + 1}) ${cell.correctAnswer}`)
+            .map((cell) => `(${cell.row + 1},${cell.col + 1}) ${[cell.correctAnswer, ...(cell.acceptedAnswers ?? [])].filter(Boolean).join(" o ")}`)
             .join(" / ");
   return (
     <div className={`feedback ${isCorrect ? "correct" : "incorrect"}`}>
@@ -340,11 +412,92 @@ function Feedback({ question, isCorrect }: { question: Question; isCorrect: bool
   );
 }
 
+function PracticePicker({ questions, onStart }: { questions: Question[]; onStart: (questions: Question[]) => void }) {
+  const [selectedIds, setSelectedIds] = useState<string[]>(questions.map((question) => question.id));
+  const selectedQuestions = questions.filter((question) => selectedIds.includes(question.id));
+
+  useEffect(() => {
+    setSelectedIds(questions.map((question) => question.id));
+  }, [questions]);
+
+  function toggleQuestion(id: string) {
+    setSelectedIds((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
+  }
+
+  function selectByType(type: QuestionType) {
+    setSelectedIds(questions.filter((question) => question.type === type).map((question) => question.id));
+  }
+
+  return (
+    <main className="main practice-picker">
+      <section className="quiz-card">
+        <div className="section-title">
+          <h1>Elegir práctica</h1>
+          <strong>{selectedQuestions.length} seleccionada(s)</strong>
+        </div>
+
+        <div className="picker-actions">
+          <button className="ghost-button" type="button" onClick={() => setSelectedIds(questions.map((question) => question.id))}>
+            Todas
+          </button>
+          <button className="ghost-button" type="button" onClick={() => setSelectedIds(questions.slice(-5).map((question) => question.id))}>
+            Últimas 5
+          </button>
+          <button className="ghost-button" type="button" onClick={() => selectByType("multiple_choice")}>
+            Multiple choice
+          </button>
+          <button className="ghost-button" type="button" onClick={() => selectByType("drag_and_drop")}>
+            Frases
+          </button>
+          <button className="ghost-button" type="button" onClick={() => selectByType("table_drag_and_drop")}>
+            Tablas
+          </button>
+          <button className="ghost-button" type="button" onClick={() => setSelectedIds([])}>
+            Ninguna
+          </button>
+        </div>
+
+        <div className="picker-list">
+          {questions.map((question, questionIndex) => (
+            <label className="picker-item" key={question.id}>
+              <input checked={selectedIds.includes(question.id)} type="checkbox" onChange={() => toggleQuestion(question.id)} />
+              <span className="type-pill">{questionTypeLabel(question.type)}</span>
+              <strong>{questionIndex + 1}.</strong>
+              <span>{question.statement}</span>
+            </label>
+          ))}
+        </div>
+
+        <div className="actions-row">
+          <button className="primary-button" type="button" disabled={selectedQuestions.length === 0} onClick={() => onStart(selectedQuestions)}>
+            Empezar práctica
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
   const [drafts, setDrafts] = useState<ImportDraft[]>([]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [ocrStatus, setOcrStatus] = useState<OcrStatus | null>(null);
+  const [showTableBuilder, setShowTableBuilder] = useState(false);
+  const [tableBuilder, setTableBuilder] = useState<TableImportBuilder>(() => ({
+    statement: "",
+    table: makeEmptyTable(4, 6),
+    options: [],
+    detectedAnswers: [],
+    nextAnswerIndex: 0
+  }));
+
+  useEffect(() => {
+    getOcrStatus()
+      .then(setOcrStatus)
+      .catch(() => setOcrStatus(null));
+  }, []);
 
   useEffect(() => {
     function handlePaste(event: ClipboardEvent) {
@@ -372,13 +525,28 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
     setMessage("Procesando OCR...");
     try {
       const response = await uploadOcrImages(imageFiles);
-      setDrafts(
-        response.results.map((result) => ({
+      const normalResults = response.results.filter((result) => result.parsedQuestion.type !== "table_drag_and_drop");
+      const tableResults = response.results.filter((result) => result.parsedQuestion.type === "table_drag_and_drop");
+
+      setDrafts((current) => [
+        ...current,
+        ...normalResults.map((result) => ({
           ...result,
           id: `${result.filename}-${Date.now()}-${Math.random().toString(16).slice(2)}`
         }))
+      ]);
+
+      for (const result of tableResults) {
+        applyTableOcrResultToBuilder(result);
+      }
+
+      if (tableResults.length > 0) {
+        setShowTableBuilder(true);
+      }
+
+      setMessage(
+        `OCR listo. ${normalResults.length} captura(s) a revision normal y ${tableResults.length} captura(s) al constructor de tabla.`
       );
-      setMessage("OCR listo. Revisa y corregi antes de guardar.");
     } catch (uploadError) {
       setMessage(uploadError instanceof Error ? uploadError.message : "No se pudo procesar OCR.");
     } finally {
@@ -420,12 +588,165 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
     setBusy(true);
     setMessage("");
     try {
-      await createQuestionsBulk(drafts.map((draft) => normalizeQuestionInput({ ...draft.parsedQuestion, ocrText: draft.text })));
+      const draftQuestions = drafts.map((draft) => normalizeQuestionInput({ ...draft.parsedQuestion, ocrText: draft.text }));
+      const questionsToSave = [...draftQuestions];
+      if (showTableBuilder && tableBlankCells(tableBuilder.table).length > 0 && tableBuilder.statement.trim()) {
+        questionsToSave.push(
+          normalizeQuestionInput({
+            type: "table_drag_and_drop",
+            statement: tableBuilder.statement.trim(),
+            table: tableBuilder.table,
+            draggableOptions: tableBuilder.options
+          })
+        );
+      }
+      await createQuestionsBulk(questionsToSave);
       await onSaved();
       setDrafts([]);
+      resetTableBuilder();
       setMessage("Preguntas importadas al banco.");
     } catch (saveError) {
       setMessage(saveError instanceof Error ? saveError.message : "No se pudieron guardar las preguntas.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function resetTableBuilder() {
+    setTableBuilder({
+      statement: "",
+      table: makeEmptyTable(4, 6),
+      options: [],
+      detectedAnswers: [],
+      nextAnswerIndex: 0
+    });
+    setShowTableBuilder(false);
+  }
+
+  function applyTableOcrResultToBuilder(result: OcrUploadResult) {
+    const lines = result.lines.length ? result.lines : result.text.split(/\r?\n/);
+    const looksLikeAnswerCapture = /respuesta(s)? correcta(s)?/i.test(result.text) || lines.some((line) => line.includes("["));
+
+    if (looksLikeAnswerCapture) {
+      const answers = extractAnswerGroups(lines);
+      setTableBuilder((current) => ({
+        ...current,
+        detectedAnswers: uniqueAnswerGroups([...current.detectedAnswers, ...answers]),
+        options: uniqueList([...current.options, ...flattenAnswerGroups(answers)])
+      }));
+      return;
+    }
+
+    if (result.parsedQuestion.type === "table_drag_and_drop") {
+      setTableBuilder((current) => ({
+        ...current,
+        statement: result.parsedQuestion.statement || current.statement,
+        table: result.parsedQuestion.table,
+        options: uniqueList([...current.options, ...result.parsedQuestion.draggableOptions])
+      }));
+      return;
+    }
+
+    const statement = firstStatementLine(lines, result.text);
+    const options = extractShortOptionsFromLines(lines);
+    setTableBuilder((current) => ({
+      ...current,
+      statement: statement || current.statement,
+      options: uniqueList([...current.options, ...options])
+    }));
+  }
+
+  function applyDraftAsEmptyTable(draft: ImportDraft) {
+    const statement = firstStatementLine(draft.lines, draft.text);
+    const options = extractShortOptionsFromLines(draft.lines.length ? draft.lines : draft.text.split(/\r?\n/));
+    setTableBuilder((current) => ({
+      ...current,
+      statement: statement || current.statement,
+      table: current.table.rows === 4 && current.table.columns === 6 ? current.table : makeEmptyTable(4, 6),
+      options: uniqueList([...current.options, ...options])
+    }));
+    setShowTableBuilder(true);
+    setMessage("Tabla vacia aplicada: revise filas, columnas, blanks y opciones.");
+  }
+
+  function applyDraftAsTableAnswers(draft: ImportDraft) {
+    const answers = extractAnswerGroups(draft.lines.length ? draft.lines : draft.text.split(/\r?\n/));
+    setTableBuilder((current) => ({
+      ...current,
+      detectedAnswers: uniqueAnswerGroups([...current.detectedAnswers, ...answers]),
+      options: uniqueList([...current.options, ...flattenAnswerGroups(answers)])
+    }));
+    setShowTableBuilder(true);
+    setMessage(`Respuestas detectadas: ${answers.length}. Ahora podes asignarlas a los blanks.`);
+  }
+
+  function assignAnswersInOrder() {
+    setTableBuilder((current) => {
+      const answers = current.detectedAnswers;
+      let answerIndex = 0;
+      const table = {
+        ...current.table,
+        cells: current.table.cells.map((cell) => {
+          if (!cell.isBlank) {
+            return cell;
+          }
+          const answer = answers[answerIndex];
+          answerIndex += 1;
+          return {
+            ...cell,
+            correctAnswer: answer?.primary ?? cell.correctAnswer ?? "",
+            acceptedAnswers: uniqueList([...(cell.acceptedAnswers ?? []), ...(answer?.alternatives ?? [])])
+          };
+        })
+      };
+      return { ...current, table, nextAnswerIndex: answerIndex };
+    });
+  }
+
+  function assignNextAnswerToCell(row: number, col: number) {
+    setTableBuilder((current) => {
+      const answer = current.detectedAnswers[current.nextAnswerIndex];
+      if (!answer) {
+        return current;
+      }
+      return {
+        ...current,
+        nextAnswerIndex: current.nextAnswerIndex + 1,
+        table: {
+          ...current.table,
+          cells: current.table.cells.map((cell) =>
+            cell.row === row && cell.col === col
+              ? {
+                  ...cell,
+                  isBlank: true,
+                  content: "",
+                  correctAnswer: answer.primary,
+                  acceptedAnswers: uniqueList([...(cell.acceptedAnswers ?? []), ...answer.alternatives])
+                }
+              : cell
+          )
+        }
+      };
+    });
+  }
+
+  async function saveTableOnly() {
+    setBusy(true);
+    setMessage("");
+    try {
+      await createQuestionsBulk([
+        normalizeQuestionInput({
+          type: "table_drag_and_drop",
+          statement: tableBuilder.statement.trim(),
+          table: tableBuilder.table,
+          draggableOptions: tableBuilder.options
+        })
+      ]);
+      await onSaved();
+      resetTableBuilder();
+      setMessage("Tabla importada al banco.");
+    } catch (saveError) {
+      setMessage(saveError instanceof Error ? saveError.message : "No se pudo guardar la tabla.");
     } finally {
       setBusy(false);
     }
@@ -445,7 +766,14 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
       >
         <div className="section-title">
           <h1>Importar desde capturas</h1>
-          <FileImage size={28} />
+          <div className="item-actions">
+            {drafts.length > 0 ? (
+              <button className="ghost-button" type="button" onClick={() => setDrafts([])}>
+                Limpiar
+              </button>
+            ) : null}
+            <FileImage size={28} />
+          </div>
         </div>
         <label className={`file-picker ${isDragging ? "dragging" : ""}`}>
           <Upload size={24} />
@@ -453,6 +781,13 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
           <input accept="image/*" multiple type="file" onChange={(event) => uploadFiles(event.target.files)} />
         </label>
         <p className="helper-text">Recorta una captura y pegala con Ctrl+V aca. Tambien podes soltar archivos o elegirlos desde el explorador.</p>
+        {ocrStatus ? (
+          <p className={`provider-status ${ocrStatus.awsTextractReady ? "ready" : "warning"}`}>
+            OCR activo: {ocrStatus.provider}
+            {ocrStatus.fallbackToTesseract ? " con fallback a tesseract" : ""}
+            {!ocrStatus.awsTextractReady ? `. Faltan: ${ocrStatus.missingAwsCredentials.join(", ")}` : ""}
+          </p>
+        ) : null}
         <p className="helper-text">El OCR no intenta ser perfecto: lee la imagen, propone una pregunta y deja todo editable.</p>
         {message ? <p className="form-message">{message}</p> : null}
       </section>
@@ -466,15 +801,46 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
             key={draft.id}
             onChange={(parsedQuestion) => updateParsed(index, parsedQuestion)}
             onDraftTextChange={(text) => updateDraft(index, { ...draft, text })}
-            onRemove={() => setDrafts((current) => current.filter((_, draftIndex) => draftIndex !== index))}
+            onRemove={() => removeDraft(index)}
             onReparse={() => reparse(index)}
+            onUseAsTableAnswers={() => {
+              applyDraftAsTableAnswers(draft);
+              removeDraft(index);
+            }}
+            onUseAsTableShell={() => {
+              applyDraftAsEmptyTable(draft);
+              removeDraft(index);
+            }}
           />
         ))}
       </section>
 
-      {drafts.length > 0 ? (
+      {!showTableBuilder && drafts.length === 0 ? (
+        <section className="editor-panel table-builder-cta">
+          <div>
+            <h1>Constructor de tablas</h1>
+            <p className="helper-text">Usalo cuando tengas una captura de tabla vacía y otra con la respuesta correcta.</p>
+          </div>
+          <button className="ghost-button" type="button" onClick={() => setShowTableBuilder(true)}>
+            Abrir constructor
+          </button>
+        </section>
+      ) : null}
+
+      {showTableBuilder ? (
+        <TableImportBuilderPanel
+          builder={tableBuilder}
+          onAssignAnswersInOrder={assignAnswersInOrder}
+          onAssignNextAnswerToCell={assignNextAnswerToCell}
+          onBuilderChange={setTableBuilder}
+          onReset={resetTableBuilder}
+          onSaveTableOnly={saveTableOnly}
+        />
+      ) : null}
+
+      {drafts.length > 0 || (showTableBuilder && tableBlankCells(tableBuilder.table).length > 0) ? (
         <div className="sticky-save">
-          <span>{drafts.length} pregunta(s) listas para revisar</span>
+          <span>{drafts.length} pregunta(s){showTableBuilder ? " + constructor de tabla" : ""}</span>
           <button className="primary-button" disabled={busy} type="button" onClick={saveAll}>
             <Save size={18} />
             Guardar importacion
@@ -492,7 +858,9 @@ function ImportDraftEditor({
   onChange,
   onDraftTextChange,
   onRemove,
-  onReparse
+  onReparse,
+  onUseAsTableAnswers,
+  onUseAsTableShell
 }: {
   draft: ImportDraft;
   disabled: boolean;
@@ -501,6 +869,8 @@ function ImportDraftEditor({
   onDraftTextChange: (text: string) => void;
   onRemove: () => void;
   onReparse: () => void;
+  onUseAsTableAnswers: () => void;
+  onUseAsTableShell: () => void;
 }) {
   const question = draft.parsedQuestion;
   const textPartsRaw = question.type === "drag_and_drop" ? question.textParts.join(" | ") : "";
@@ -556,6 +926,10 @@ function ImportDraftEditor({
     });
   }
 
+  function removeDraft(index: number) {
+    setDrafts((current) => current.filter((_, draftIndex) => draftIndex !== index));
+  }
+
   function markBlank(word: string) {
     if (question.type !== "drag_and_drop" || !word.trim()) {
       return;
@@ -583,6 +957,12 @@ function ImportDraftEditor({
           <button className="ghost-button" disabled={disabled} type="button" onClick={onReparse}>
             <Wand2 size={17} />
             Reinterpretar
+          </button>
+          <button className="ghost-button" disabled={disabled} type="button" onClick={onUseAsTableShell}>
+            Tabla vacia
+          </button>
+          <button className="ghost-button" disabled={disabled} type="button" onClick={onUseAsTableAnswers}>
+            Respuestas
           </button>
           <button className="icon-button danger" disabled={disabled} type="button" onClick={onRemove} aria-label="Quitar">
             <Trash2 size={18} />
@@ -677,6 +1057,91 @@ function ImportDraftEditor({
   );
 }
 
+function TableImportBuilderPanel({
+  builder,
+  onAssignAnswersInOrder,
+  onAssignNextAnswerToCell,
+  onBuilderChange,
+  onReset,
+  onSaveTableOnly
+}: {
+  builder: TableImportBuilder;
+  onAssignAnswersInOrder: () => void;
+  onAssignNextAnswerToCell: (row: number, col: number) => void;
+  onBuilderChange: (builder: TableImportBuilder) => void;
+  onReset: () => void;
+  onSaveTableOnly: () => void;
+}) {
+  const blankCount = tableBlankCells(builder.table).length;
+  const nextAnswer = builder.detectedAnswers[builder.nextAnswerIndex];
+
+  return (
+    <section className="editor-panel import-card table-builder-panel">
+      <div className="section-title">
+        <h1>Constructor de tabla por partes</h1>
+        <div className="item-actions">
+          <button className="ghost-button" type="button" onClick={onReset}>
+            Limpiar tabla
+          </button>
+          <button className="primary-button" type="button" onClick={onSaveTableOnly} disabled={!builder.statement.trim() || blankCount === 0}>
+            <Save size={18} />
+            Guardar tabla
+          </button>
+        </div>
+      </div>
+
+      <label>
+        Enunciado de la tabla
+        <textarea
+          value={builder.statement}
+          onChange={(event) => onBuilderChange({ ...builder, statement: event.target.value })}
+          placeholder="Aplicá una captura como tabla vacía o escribí el enunciado..."
+        />
+      </label>
+
+      <TableQuestionEditor
+        table={builder.table}
+        options={builder.options}
+        onTableChange={(table) => onBuilderChange({ ...builder, table })}
+        onOptionsChange={(options) => onBuilderChange({ ...builder, options })}
+      />
+
+      <div className="detected-answer-panel">
+        <div className="section-title">
+          <h2>Respuestas detectadas</h2>
+          <button className="ghost-button" type="button" onClick={onAssignAnswersInOrder} disabled={builder.detectedAnswers.length === 0 || blankCount === 0}>
+            Autocompletar en orden
+          </button>
+        </div>
+        <p className="helper-text">
+          Siguiente: {nextAnswer ? `${nextAnswer.primary}${nextAnswer.alternatives.length > 0 ? ` o ${nextAnswer.alternatives.join(" o ")}` : ""}` : "sin respuestas pendientes"}. Tambien podes tocar una celda en la grilla rápida para asignarla.
+        </p>
+        <div className="detected-answer-list">
+          {builder.detectedAnswers.map((answer, index) => (
+            <span className={index < builder.nextAnswerIndex ? "used-answer" : ""} key={`${answer.primary}-${index}`}>
+              {index + 1}. {answer.primary}
+              {answer.alternatives.length > 0 ? ` o ${answer.alternatives.join(" o ")}` : ""}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="quick-table-grid" style={{ gridTemplateColumns: `repeat(${builder.table.columns}, minmax(74px, 1fr))` }}>
+        {builder.table.cells.map((cell) => (
+          <button
+            className={cell.isBlank ? "quick-cell blank-cell" : "quick-cell"}
+            key={`${cell.row}-${cell.col}`}
+            type="button"
+            onClick={() => onAssignNextAnswerToCell(cell.row, cell.col)}
+          >
+            {cell.correctAnswer || cell.content || `${cell.row + 1},${cell.col + 1}`}
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function DragPreview({
   question,
   onChange,
@@ -738,6 +1203,86 @@ function uniqueWords(text: string) {
         .map((word) => word.trim())
         .filter((word) => word.length > 3)
     )
+  );
+}
+
+function uniqueList(values: string[]) {
+  return Array.from(new Set(values.map((value) => value.trim()).filter(Boolean)));
+}
+
+function firstStatementLine(lines: string[], fallbackText: string) {
+  return (
+    lines.find((line) => line.length > 40 && /tabla|simplex|programaci/i.test(line)) ??
+    fallbackText
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .find((line) => line.length > 40) ??
+    ""
+  );
+}
+
+function extractAnswerGroups(lines: string[]) {
+  const answers: Array<{ primary: string; alternatives: string[] }> = [];
+  for (const line of lines) {
+    const bracketed = Array.from(line.matchAll(/\[([^\]]+)\]?/g)).map((match) => match[1].trim()).filter(Boolean);
+    if (bracketed.length > 0) {
+      if (/\s+(?:o|ó)\s+/i.test(line) && bracketed.length > 1) {
+        answers.push({ primary: bracketed[0], alternatives: bracketed.slice(1) });
+      } else {
+        answers.push(...bracketed.map((answer) => ({ primary: answer, alternatives: [] })));
+      }
+      continue;
+    }
+    const cleaned = line.replace(/^\d+\.\s*/, "").trim();
+    if (cleaned.length >= 2 && cleaned.length <= 42 && !/[.:?]$/.test(cleaned) && !/^o$/i.test(cleaned)) {
+      const alternatives = splitAlternativeAnswers(cleaned);
+      answers.push({ primary: alternatives[0] ?? cleaned, alternatives: alternatives.slice(1) });
+    }
+  }
+  return uniqueAnswerGroups(answers);
+}
+
+function splitAlternativeAnswers(value: string) {
+  return value
+    .split(/\s+(?:o|ó)\s+/i)
+    .map((answer) => answer.trim())
+    .filter(Boolean);
+}
+
+function flattenAnswerGroups(groups: Array<{ primary: string; alternatives: string[] }>) {
+  return groups.flatMap((group) => [group.primary, ...group.alternatives]);
+}
+
+function uniqueAnswerGroups(groups: Array<{ primary: string; alternatives: string[] }>) {
+  const seen = new Set<string>();
+  const uniqueGroups: Array<{ primary: string; alternatives: string[] }> = [];
+  for (const group of groups) {
+    const key = [group.primary, ...group.alternatives].map(normalizeAnswer).join("|");
+    if (!group.primary || seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    uniqueGroups.push({ primary: group.primary, alternatives: uniqueList(group.alternatives) });
+  }
+  return uniqueGroups;
+}
+
+function extractShortOptionsFromLines(lines: string[]) {
+  return uniqueList(
+    lines
+      .map((line) => line.replace(/^\d+\.\s*/, "").trim())
+      .filter((line) => line.length >= 2 && line.length <= 42)
+      .filter((line) => !isImportUiNoise(line))
+      .filter((line) => !/^o$/i.test(line))
+      .filter((line) => !/respuesta correcta/i.test(line))
+      .filter((line) => !line.includes("["))
+      .filter((line) => !/[.:?]$/.test(line))
+  );
+}
+
+function isImportUiNoise(line: string) {
+  return /^(reinterpretar|tabla vacia|tabla vacía|respuestas|texto ocr original|lineas detectadas|líneas detectadas|multiple choice|drag and drop|tabla|enunciado|filas|columnas|blank|agregar|guardar importacion|guardar importación|constructor de tabla|opciones arrastrables y distractores)$/i.test(
+    line.trim()
   );
 }
 
@@ -832,7 +1377,10 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
                 type,
                 statement: statement.trim(),
                 table,
-                draggableOptions: cleanList([...tableOptions, ...tableBlankCells(table).map((cell) => cell.correctAnswer ?? "")])
+                draggableOptions: cleanList([
+                  ...tableOptions,
+                  ...tableBlankCells(table).flatMap((cell) => [cell.correctAnswer ?? "", ...(cell.acceptedAnswers ?? [])])
+                ])
               };
 
       if (editingId) {
@@ -1034,6 +1582,30 @@ function TableQuestionEditor({
     });
   }
 
+  function markAllCellsAsBlank() {
+    onTableChange({
+      ...table,
+      cells: table.cells.map((cell) => ({
+        ...cell,
+        content: "",
+        isBlank: true,
+        correctAnswer: cell.correctAnswer || cell.content
+      }))
+    });
+  }
+
+  function clearAllBlanks() {
+    onTableChange({
+      ...table,
+      cells: table.cells.map((cell) => ({
+        ...cell,
+        content: cell.content || cell.correctAnswer || "",
+        isBlank: false,
+        correctAnswer: ""
+      }))
+    });
+  }
+
   return (
     <>
       <div className="dimension-grid">
@@ -1046,6 +1618,16 @@ function TableQuestionEditor({
           <input min={1} type="number" value={table.columns} onChange={(event) => resize(table.rows, Number(event.target.value))} />
         </label>
       </div>
+
+      <div className="table-editor-actions">
+        <button className="ghost-button" type="button" onClick={markAllCellsAsBlank}>
+          Hacer todas blank
+        </button>
+        <button className="ghost-button" type="button" onClick={clearAllBlanks}>
+          Quitar blanks
+        </button>
+      </div>
+      <p className="helper-text">Blank es una celda donde vas a soltar una opción. La respuesta correcta es el valor esperado para esa celda.</p>
 
       <div className="table-editor-wrap">
         <table className="table-editor">
@@ -1065,11 +1647,24 @@ function TableQuestionEditor({
                         Blank
                       </label>
                       {cell.isBlank ? (
-                        <input
-                          value={cell.correctAnswer ?? ""}
-                          onChange={(event) => updateCell(row, col, { correctAnswer: event.target.value, content: "" })}
-                          placeholder="Respuesta correcta"
-                        />
+                        <div className="cell-answer-fields">
+                          <input
+                            value={cell.correctAnswer ?? ""}
+                            onChange={(event) => updateCell(row, col, { correctAnswer: event.target.value, content: "" })}
+                            placeholder="Respuesta correcta"
+                          />
+                          <input
+                            value={(cell.acceptedAnswers ?? []).join(" | ")}
+                            onChange={(event) =>
+                              updateCell(row, col, {
+                                acceptedAnswers: event.target.value
+                                  .split("|")
+                                  .filter((answer) => answer.length > 0)
+                              })
+                            }
+                            placeholder="Alternativas con |"
+                          />
+                        </div>
                       ) : (
                         <input
                           value={cell.content}
@@ -1105,7 +1700,13 @@ function TablePreview({ table }: { table: DragTable }) {
                   const cell = table.cells.find((item) => item.row === row && item.col === col);
                   return (
                     <td className={cell?.isBlank ? "table-blank-cell" : ""} key={`${row}-${col}`}>
-                      {cell?.isBlank ? <span className="blank-placeholder">{cell.correctAnswer || "blank"}</span> : cell?.content}
+                      {cell?.isBlank ? (
+                        <span className="blank-placeholder">
+                          {[cell.correctAnswer, ...(cell.acceptedAnswers ?? [])].filter(Boolean).join(" o ") || "blank"}
+                        </span>
+                      ) : (
+                        cell?.content
+                      )}
                     </td>
                   );
                 })}

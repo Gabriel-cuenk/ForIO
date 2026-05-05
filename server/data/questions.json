@@ -11,5 +11,572 @@
     "correctAnswer": "Comprender el sistema, su estructura y relaciones",
     "ocrText": "Los modelos empresariales cognitivos están destinados principalmente a:\nSeleccione una:\n\na. Reemplazar la base de datos\n\nb. Operar automáticamente sin análisis\n\ne. Comprender el sistema, su estructura y relaciones O)\n\nd. Eliminar la necesidad de decisiones",
     "id": "1777993328814-f5f19fcd74f14"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la definicion del problema, una tarea importante es identificar:",
+    "options": [
+      "Exclusivamente la opinion del analista",
+      "Objetivos, restricciones y cursos de acción",
+      "Solo el software disponible",
+      "Unicamente el costo del modelo"
+    ],
+    "correctAnswer": "Objetivos, restricciones y cursos de acción",
+    "ocrText": "En la definicion del problema, una tarea importante es identificar:\nSeleccione una:\na.\nExclusivamente la opinion del analista\nb.\nObjetivos, restricciones y cursos de acción\nC.\nSolo el software disponible\nd. Unicamente el costo del modelo",
+    "id": "1777994585968-6434cbc231e53"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "¿Cuál de los siguientes ejemplos corresponde a un modelo de colas?",
+    "options": [
+      "Pacientes esperando atencion en un hospital",
+      "Evaluacion del clima organizacional",
+      "Seleccion de proveedores estratégicos",
+      "Diseño del logo institucional"
+    ],
+    "correctAnswer": "Pacientes esperando atencion en un hospital",
+    "ocrText": "¿Cuál de los siguientes ejemplos corresponde a un modelo de colas?\nSeleccione una:\na.\nPacientes esperando atencion en un hospital\nb.\nEvaluacion del clima organizacional\nC.\nSeleccion de proveedores estratégicos\nd.\nDiseño del logo institucional",
+    "id": "1777994603286-9604ca8afdd4c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En el nivel de gestión predominan decisiones:",
+    "options": [
+      "Semiestructuradas",
+      "Unicamente automáticas",
+      "Totalmente estructuradas",
+      "Sin criterios de evaluacion"
+    ],
+    "correctAnswer": "Semiestructuradas",
+    "ocrText": "En el nivel de gestión predominan decisiones:\nSeleccione una:\na. Semiestructuradas\nb. Unicamente automáticas\nC.\nTotalmente estructuradas\nd.\nSin criterios de evaluacion",
+    "id": "1777994638033-b04ee484fd39e"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El análisis de sensibilidad permite:",
+    "options": [
+      "Aumentar la complejidad",
+      "Simplificar el modelo",
+      "Evaluar cambios en los parametros",
+      "Eliminar errores"
+    ],
+    "correctAnswer": "Evaluar cambios en los parametros",
+    "ocrText": "El análisis de sensibilidad permite:\nSeleccione una:\na.\nAumentar la complejidad\nb. Simplificar el modelo\nX\nC. Evaluar cambios en los parametros\nd. Eliminar errores",
+    "id": "1777994688310-465716c03a5788"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo en Investigación de Operaciones es:",
+    "options": [
+      "Un conjunto de datos sin estructura",
+      "Una representacion simplificada del problema real",
+      "Un algoritmo exclusivamente computacional",
+      "Una copia exacta de la realidad"
+    ],
+    "correctAnswer": "Una representacion simplificada del problema real",
+    "ocrText": "Un modelo en Investigación de Operaciones es:\nSeleccione una:\na. Un conjunto de datos sin estructura\nb.\nUna representacion simplificada del problema real\nC.\nUn algoritmo exclusivamente computacional\nd.\nUna copia exacta de la realidad",
+    "id": "1777994688310-9f4c0ad2ab071"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Segun la clasificacion general de la unidad, los modelos pueden ser:",
+    "options": [
+      "Operativos, tácticos y estratégicos",
+      "Mentales, abstractos y fisicos",
+      "Globales, locales y mixtos",
+      "Manual, digital y automático"
+    ],
+    "correctAnswer": "Mentales, abstractos y fisicos",
+    "ocrText": "Segun la clasificacion general de la unidad, los modelos pueden ser:\nSeleccione una:\na.\nOperativos, tácticos y estratégicos\nX\nb.\nMentales, abstractos y fisicos\nC.\nGlobales, locales y mixtos\nd.\nManual, digital y automático",
+    "id": "1777994688310-11087790260e5"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la validacion del modelo, es importante comprobar que las expresiones matemáticas sean consistentes en:",
+    "options": [
+      "La cantidad de computadoras disponibles",
+      "Las dimensiones de las unidades utilizadas",
+      "El color del gráfico de salida",
+      "La opinion subjetiva del decisor"
+    ],
+    "correctAnswer": "Las dimensiones de las unidades utilizadas",
+    "ocrText": "En la validacion del modelo, es importante comprobar que las expresiones matemáticas sean consistentes en:\nSeleccione una:\na.\nLa cantidad de computadoras disponibles\nb.\nLas dimensiones de las unidades utilizadas\nC.\nEl color del gráfico de salida\nd.\nLa opinion subjetiva del decisor",
+    "id": "1777994724999-0e9b2901be26c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Las decisiones bajo riesgo se caracterizan por:",
+    "options": [
+      "Falta total de informacion",
+      "Certeza total",
+      "Probabilidades conocidas",
+      "Ausencia de datos"
+    ],
+    "correctAnswer": "Probabilidades conocidas",
+    "ocrText": "Las decisiones bajo riesgo se caracterizan por:\nSeleccione una:\na. Falta total de informacion\nb.\nCerteza total\nC.\nProbabilidades conocidas\nd. Ausencia de datos",
+    "id": "1777994724999-765276d3824f1"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los Sistemas de Apoyo a las Decisiones ayudan a resolver problemas:",
+    "options": [
+      "Exclusivamente contables",
+      "Solo personales y no organizacionales",
+      "Unicamente totalmente estructurados",
+      "No estructurados O semiestructurados"
+    ],
+    "correctAnswer": "No estructurados O semiestructurados",
+    "ocrText": "Los Sistemas de Apoyo a las Decisiones ayudan a resolver problemas:\nSeleccione una:\na.\nExclusivamente contables\nb.\nSolo personales y no organizacionales\nC. Unicamente totalmente estructurados\nd.\nNo estructurados O semiestructurados",
+    "id": "1777994724999-d5e5f35a5921e"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo debe ser menos complejo que el problema real para:",
+    "options": [
+      "Hacer más manejable el analisis y evaluar alternativas",
+      "Copiar exactamente la realidad",
+      "Evitar el uso de restricciones",
+      "Garantizar siempre una solucion única"
+    ],
+    "correctAnswer": "Hacer más manejable el analisis y evaluar alternativas",
+    "ocrText": "Un modelo debe ser menos complejo que el problema real para:\nSeleccione una:\na.\nHacer más manejable el analisis y evaluar alternativas\nb.\nCopiar exactamente la realidad\nC.\nEvitar el uso de restricciones\nd.\nGarantizar siempre una solucion única",
+    "id": "1777995115944-4c1efebf40fd18"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El objetivo principal de la Investigación de Operaciones es:",
+    "options": [
+      "Reducir costos sin considerar restricciones",
+      "Eliminar la incertidumbre completamente",
+      "Encontrar la mejor solución posible a un problema",
+      "Automatizar procesos empresariales"
+    ],
+    "correctAnswer": "Encontrar la mejor solución posible a un problema",
+    "ocrText": "El objetivo principal de la Investigación de Operaciones es:\nSeleccione una:\na. Reducir costos sin considerar restricciones\nb. Eliminar la incertidumbre completamente\nC. Encontrar la mejor solución posible a un problema\nd. Automatizar procesos empresariales",
+    "id": "1777995115944-020294e72f2468"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La Investigacion de Operaciones se define como:",
+    "options": [
+      "Un sistema de informacion automatizado",
+      "Una técnica exclusivamente matematica",
+      "La aplicación del método científico a problemas organizacionales",
+      "Un conjunto de métodos empiricos sin base cientifica"
+    ],
+    "correctAnswer": "La aplicación del método científico a problemas organizacionales",
+    "ocrText": "La Investigacion de Operaciones se define como:\nSeleccione una:\na.\nUn sistema de informacion automatizado\nb.\nUna técnica exclusivamente matematica\nC.\nLa aplicación del método científico a problemas organizacionales\nd.\nUn conjunto de métodos empiricos sin base cientifica",
+    "id": "1777995115944-2ebf66c1465728"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La simulacion se define como un método que:",
+    "options": [
+      "Imita O emula al sistema real en base a un modelo",
+      "Evita toda representación del sistema",
+      "Sirve exclusivamente para problemas lineales",
+      "Solo usa datos históricos sin modelo"
+    ],
+    "correctAnswer": "Imita O emula al sistema real en base a un modelo",
+    "ocrText": "La simulacion se define como un método que:\nSeleccione una:\na.\nImita O emula al sistema real en base a un modelo\nb.\nEvita toda representación del sistema\nC.\nSirve exclusivamente para problemas lineales\nd.\nSolo usa datos históricos sin modelo",
+    "id": "1777995115944-ce5badc5cc9368"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la gerencia estratégica predominan decisiones:",
+    "options": [
+      "Repetitivas y rutinarias",
+      "No estructuradas",
+      "Completamente programables",
+      "Sin participacion humana"
+    ],
+    "correctAnswer": "No estructuradas",
+    "ocrText": "En la gerencia estratégica predominan decisiones:\nSeleccione una:\na.\nRepetitivas y rutinarias\nb.\nNo estructuradas\nC.\nCompletamente programables\nd.\nSin participacion humana",
+    "id": "1777995115944-2692fd8cec8d9"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Una norma para lograr éxito en IO es entenderla como:",
+    "options": [
+      "Un enfoque de solucion de problemas",
+      "Una herramienta exclusiva para grandes empresas",
+      "Un conjunto aislado de formulas",
+      "Un reemplazo total del juicio humano"
+    ],
+    "correctAnswer": "Un enfoque de solucion de problemas",
+    "ocrText": "Una norma para lograr éxito en IO es entenderla como:\nSeleccione una:\na.\nUn enfoque de solucion de problemas\nb.\nUna herramienta exclusiva para grandes empresas\nC.\nUn conjunto aislado de formulas\nd.\nUn reemplazo total del juicio humano",
+    "id": "1777995115944-1f707def72b39"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "¿Por qué la definicion del problema es una etapa crucial?",
+    "options": [
+      "Porque reemplaza todas las demás etapas",
+      "Porque elimina la incertidumbre del entorno",
+      "Porque condiciona la relevancia de las conclusiones",
+      "Porque evita formular modelos"
+    ],
+    "correctAnswer": "Porque condiciona la relevancia de las conclusiones",
+    "ocrText": "¿Por qué la definicion del problema es una etapa crucial?\nSeleccione una:\na.\nPorque reemplaza todas las demás etapas\nb. Porque elimina la incertidumbre del entorno\nX\nC.\nPorque condiciona la relevancia de las conclusiones\nd.\nPorque evita formular modelos",
+    "id": "1777995115944-8d7a696931ebf8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "¿Cuál de los siguientes casos corresponde a modelos de planeamiento y control de proyectos?",
+    "options": [
+      "Redaccion de reglamentos internos",
+      "Diagnóstico clínico individual",
+      "Lanzamiento de productos en el mercado",
+      "Diseno de logotipos publicitarios"
+    ],
+    "correctAnswer": "Lanzamiento de productos en el mercado",
+    "ocrText": "¿Cuál de los siguientes casos corresponde a modelos de planeamiento y control de proyectos?\nSeleccione una:\na.\nRedaccion de reglamentos internos\nb.\nDiagnóstico clínico individual\nC.\nLanzamiento de productos en el mercado\nd.\nDiseno de logotipos publicitarios",
+    "id": "1777995115944-c94e54b6881228"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La unidad advierte que la IO es relativamente costosa, por lo que deberia emplearse:",
+    "options": [
+      "Unicamente en problemas académicos",
+      "Solo cuando no existan datos",
+      "En cualquier problema sin análisis previo",
+      "Cuando los beneficios superen los costos"
+    ],
+    "correctAnswer": "Cuando los beneficios superen los costos",
+    "ocrText": "La unidad advierte que la IO es relativamente costosa, por lo que deberia emplearse:\nSeleccione una:\na.\nUnicamente en problemas académicos\nb.\nSolo cuando no existan datos\nC.\nEn cualquier problema sin análisis previo\nd.\nCuando los beneficios superen los costos",
+    "id": "1777995115944-7d5fd472d79708"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Una aplicacion típica de programación lineal es:",
+    "options": [
+      "Determinacion de la mezcla óptima de produccion",
+      "Edicion de imagenes",
+      "Traduccion automatica de textos",
+      "Diseño de campanas políticas"
+    ],
+    "correctAnswer": "Diseño de campanas políticas",
+    "ocrText": "Una aplicacion típica de programación lineal es:\nSeleccione una:\na.\nDeterminacion de la mezcla óptima de produccion\nb.\nEdicion de imagenes\nC.\nTraduccion automatica de textos\nd. Diseño de campanas políticas",
+    "id": "1777995115944-afa996377099c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la unidad, una organizacion se entiende como:",
+    "options": [
+      "Un problema matemático puro",
+      "Una estructura sin objetivos",
+      "Un sistema de componentes que interactuan",
+      "Un conjunto aislado de tareas independientes"
+    ],
+    "correctAnswer": "Un sistema de componentes que interactuan",
+    "ocrText": "En la unidad, una organizacion se entiende como:\nSeleccione una:\na.\nUn problema matemático puro\nb.\nUna estructura sin objetivos\nC.\nUn sistema de componentes que interactuan\nd.\nUn conjunto aislado de tareas independientes",
+    "id": "1777995395144-20e29be42961e"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los métodos de solucion en I.O. pueden clasificarse en:",
+    "options": [
+      "Analiticos, numéricos y simulacion",
+      "Deterministicos y aleatorios",
+      "Lineales y no lineales",
+      "Teóricos y prácticos"
+    ],
+    "correctAnswer": "Analiticos, numéricos y simulacion",
+    "ocrText": "Los métodos de solucion en I.O. pueden clasificarse en:\nSeleccione una:\na. Analiticos, numéricos y simulacion\nb.\nDeterministicos y aleatorios\nC. Lineales y no lineales\nX\nd.\nTeóricos y prácticos",
+    "id": "1777995395144-dc15faa6bd61b"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La validacion de un modelo implica:",
+    "options": [
+      "Eliminar variables",
+      "Aplicarlo directamente",
+      "Reducir el modelo",
+      "Verificar su coherencia y comportamiento"
+    ],
+    "correctAnswer": "Verificar su coherencia y comportamiento",
+    "ocrText": "La validacion de un modelo implica:\nSeleccione una:\na. Eliminar variables\nb. Aplicarlo directamente\nC. Reducir el modelo\nd. Verificar su coherencia y comportamiento",
+    "id": "1777995395144-06c8e3f47ff9f"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "¿Cuál de los siguientes pertenece a modelos de stock?",
+    "options": [
+      "Asignacion de personal docente",
+      "Seleccion de estrategias de negociacion",
+      "Pronóstico del clima",
+      "Determinacion de niveles de seguridad y punto de pedido"
+    ],
+    "correctAnswer": "Determinacion de niveles de seguridad y punto de pedido",
+    "ocrText": "¿Cuál de los siguientes pertenece a modelos de stock?\nSeleccione una:\na. Asignacion de personal docente\nX\nb. Seleccion de estrategias de negociacion\nC. Pronóstico del clima\nd.\nDeterminacion de niveles de seguridad y punto de pedido",
+    "id": "1777995395144-53242b13f2be58"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En la construccion del modelo, se deben identificar:",
+    "options": [
+      "Solo resultados finales",
+      "Unicamente datos históricos",
+      "Variables controlables e incontrolables",
+      "Solo variables subjetivas"
+    ],
+    "correctAnswer": "Variables controlables e incontrolables",
+    "ocrText": "En la construccion del modelo, se deben identificar:\nSeleccione una:\na.\nSolo resultados finales\nb.\nUnicamente datos históricos\nC.\nVariables controlables e incontrolables\nd.\nSolo variables subjetivas",
+    "id": "1777995395144-aacc05fe41cff"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La Investigacion Operativa aplica la metodologia cientifica, principalmente, a traves de:",
+    "options": [
+      "Ensayo y error sin criterio",
+      "Unicamente observacion cualitativa",
+      "Opiniones sin datos",
+      "Modelos matematicos"
+    ],
+    "correctAnswer": "Modelos matematicos",
+    "ocrText": "La Investigacion Operativa aplica la metodologia cientifica, principalmente, a traves de:\nSeleccione una:\na.\nEnsayo y error sin criterio\nb.\nUnicamente observacion cualitativa\nC.\nOpiniones sin datos\nd.\nModelos matematicos",
+    "id": "1777995395144-b013a693f7e94"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los procedimientos analíticos se caracterizan por utilizar:",
+    "options": [
+      "Procesos de deduccion matematica",
+      "Encuestas de opinion",
+      "Imitacion del sistema real",
+      "Prueba y error exclusivamente"
+    ],
+    "correctAnswer": "Procesos de deduccion matematica",
+    "ocrText": "Los procedimientos analíticos se caracterizan por utilizar:\nSeleccione una:\na.\nProcesos de deduccion matematica\nb. Encuestas de opinion\nC. Imitacion del sistema real\nX\nd.\nPrueba y error exclusivamente",
+    "id": "1777995395144-05bc023ec7582"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Resolver un modelo consiste, principalmente, en:",
+    "options": [
+      "Aplicar únicamente simulación",
+      "Eliminar todas las restricciones",
+      "Reemplazar datos por intuicion",
+      "Encontrar valores de variables para optimizar 0 mejorar el sistema"
+    ],
+    "correctAnswer": "Encontrar valores de variables para optimizar 0 mejorar el sistema",
+    "ocrText": "Resolver un modelo consiste, principalmente, en:\nSeleccione una:\na. Aplicar únicamente simulación\nb. Eliminar todas las restricciones\nC. Reemplazar datos por intuicion\nd. Encontrar valores de variables para optimizar 0 mejorar el sistema",
+    "id": "1777995395144-87bc7864270c38"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Según la unidad, el primer paso en la construcción del modelo es:",
+    "options": [
+      "Resolver el modelo",
+      "Elegir el software de presentación",
+      "Definir el objetivo",
+      "Eliminar variables incontrolables"
+    ],
+    "correctAnswer": "Definir el objetivo",
+    "ocrText": "Según la unidad, el primer paso en la construcción del modelo es:\nSeleccione una:\na.\nResolver el modelo\nb. Elegir el software de presentación\nC.\nDefinir el objetivo\nd. Eliminar variables incontrolables",
+    "id": "1777995395144-dc0740bc0ef788"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El origen de la Investigacion de Operaciones moderna se ubica en:",
+    "options": [
+      "Edad Media",
+      "Segunda Guerra Mundial",
+      "Revolucion Industrial",
+      "Siglo XXI"
+    ],
+    "correctAnswer": "Segunda Guerra Mundial",
+    "ocrText": "El origen de la Investigacion de Operaciones moderna se ubica en:\nSeleccione una:\na. Edad Media\nb. Segunda Guerra Mundial\nC.\nRevolucion Industrial\nX\nd. Siglo XXI",
+    "id": "1777995395144-71310c551432c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Utilizando el Método Simplex, ¿Cómo se puede detectar que un problema de Programación Lineal es no acotado?",
+    "options": [
+      "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo positivo.",
+      "Esta situación se detecta cuando al realizar el cálculo de la variable que esta en la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo negativo.",
+      "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo reducido negativo.",
+      "Esta situacion se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo positivo.",
+      "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo."
+    ],
+    "correctAnswer": "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo.",
+    "ocrText": "Utilizando el Método Simplex, ¿Cómo se puede detectar que un problema de Programación Lineal es no acotado?\nSeleccione una:\na. Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo positivo.\nb. Esta situación se detecta cuando al realizar el cálculo de la variable que esta en la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo negativo.\nC. Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo reducido negativo.\nd. Esta situacion se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo positivo.\nLa respuesta correcta es: Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo.",
+    "id": "1777995959835-1dd9efdac203a8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La región factible determinada por un conjunto de desigualdades lineales es el conjunto de puntos que satisfacen a la vez todas las igualdades.",
+    "options": [
+      "Verdadero ",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "La región factible determinada por un conjunto de desigualdades lineales es el conjunto de puntos que satisfacen a la vez todas las igualdades.\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1777995987463-afe27bbb8285e"
+  },
+  {
+    "type": "table_drag_and_drop",
+    "statement": "La tabla optima del simplex dual de un problema primal de maximizacion y cantidad a producir en programacion lineal se arma con:",
+    "table": {
+      "rows": 4,
+      "columns": 5,
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "By"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Vector Base"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Coeficientes de Var.Base"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Valores de Var.Base"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "content": "Reales dual",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "content": "Slack dual",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Valor marginal",
+          "acceptedAnswers": [
+            "Costo de oportunidad"
+          ]
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Variables slack primal"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "Variables reales primal"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "content": "",
+          "isBlank": true,
+          "correctAnswer": "G"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "content": "",
+          "isBlank": false,
+          "correctAnswer": ""
+        }
+      ]
+    },
+    "draggableOptions": [
+      "By",
+      "Vector Base",
+      "Coeficientes de Var.Base",
+      "Valores de Var.Base",
+      "Valor marginal",
+      "Costo de oportunidad",
+      "Variables slack primal",
+      "Variables reales primal",
+      "G"
+    ],
+    "id": "1777997810630-c92ea8bf6fc808"
   }
 ]

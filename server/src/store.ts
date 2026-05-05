@@ -8,8 +8,16 @@ const __dirname = path.dirname(__filename);
 const dataFile = path.resolve(__dirname, "../data/questions.json");
 
 async function readQuestions(): Promise<Question[]> {
-  const raw = await fs.readFile(dataFile, "utf-8");
-  return JSON.parse(raw) as Question[];
+  try {
+    const raw = await fs.readFile(dataFile, "utf-8");
+    return JSON.parse(raw) as Question[];
+  } catch (error) {
+    if (isNodeError(error) && error.code === "ENOENT") {
+      await writeQuestions([]);
+      return [];
+    }
+    throw new Error(`No se pudo leer server/data/questions.json. ${error instanceof Error ? error.message : ""}`);
+  }
 }
 
 async function writeQuestions(questions: Question[]) {
@@ -18,6 +26,10 @@ async function writeQuestions(questions: Question[]) {
 
 function makeId() {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function isNodeError(error: unknown): error is NodeJS.ErrnoException {
+  return error instanceof Error && "code" in error;
 }
 
 function validateQuestion(input: QuestionInput): string | null {
@@ -77,7 +89,8 @@ function validateQuestion(input: QuestionInput): string | null {
       return "Agrega opciones arrastrables suficientes para la tabla.";
     }
     for (const cell of blanks) {
-      if (!input.draggableOptions.includes(cell.correctAnswer ?? "")) {
+      const acceptedAnswers = [cell.correctAnswer ?? "", ...(cell.acceptedAnswers ?? [])].filter(Boolean);
+      if (!acceptedAnswers.some((answer) => input.draggableOptions.includes(answer))) {
         return "Cada respuesta correcta de tabla debe estar incluida en las opciones arrastrables.";
       }
     }

@@ -117,6 +117,19 @@ OCR_FALLBACK_TO_TESSERACT=true
 
 El endpoint `POST /api/ocr/upload` devuelve texto completo, lineas detectadas, bloques de Textract cuando existan y confidence promedio si esta disponible.
 
+Para verificar que proveedor esta usando el backend:
+
+```http
+GET /api/ocr/status
+```
+
+Cuando subis o pegas una imagen, la consola del backend muestra logs como:
+
+```text
+[OCR] Procesando captura.png con provider=aws-textract
+[OCR] captura.png listo provider=aws-textract lineas=12 confidence=98.4
+```
+
 No se usa AWS Rekognition ni variables relacionadas a reconocimiento facial; la app solo necesita OCR para leer capturas de preguntas.
 
 ## Formato de preguntas

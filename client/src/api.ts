@@ -16,6 +16,13 @@ export type OcrUploadResult = {
   parsedQuestion: QuestionInput;
 };
 
+export type OcrStatus = {
+  provider: string;
+  fallbackToTesseract: boolean;
+  awsTextractReady: boolean;
+  missingAwsCredentials: string[];
+};
+
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, {
     headers: { "Content-Type": "application/json" },
@@ -23,7 +30,7 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ message: "Error inesperado." }));
+    const error = await response.json().catch(() => ({ message: `Error HTTP ${response.status}.` }));
     throw new Error(error.message ?? "Error inesperado.");
   }
 
@@ -61,6 +68,10 @@ export function updateQuestion(id: string, question: QuestionInput) {
 
 export function deleteQuestion(id: string) {
   return request<void>(`/api/questions/${id}`, { method: "DELETE" });
+}
+
+export function getOcrStatus() {
+  return request<OcrStatus>("/api/ocr/status");
 }
 
 export async function uploadOcrImages(files: File[]) {

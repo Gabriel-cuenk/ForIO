@@ -1,7 +1,9 @@
 import type { QuestionInput } from "./types.js";
 
 const optionPattern = /^(\(?[A-Da-d1-9]\)?[\).:-]\s+|[-*]\s+)/;
-const correctPattern = /(correcta|respuesta|answer)\s*[:=-]\s*(.+)$/i;
+const optionMarkerPattern = /^[A-Da-d][\).]$/;
+const correctPattern = /(la\s+)?respuesta(s)?\s+correcta(s)?\s*(es|son)?\s*[:=-]\s*(.+)$/i;
+const correctHeaderPattern = /(la\s+)?respuesta(s)?\s+correcta(s)?\s*(es|son)?\s*:?\s*$/i;
 
 function cleanLine(line: string) {
   return line.replace(/\s+/g, " ").trim();
@@ -11,47 +13,129 @@ function unique(values: string[]) {
   return Array.from(new Set(values.map((value) => value.trim()).filter(Boolean)));
 }
 
+function stripSelectionMarks(value: string) {
+  return value.replace(/^[*✓✔]\s*/, "").replace(/\s*[✓✔]\s*$/, "").replace(/\s+O\)?$/i, "").trim();
+}
+
+function splitCorrectSection(lines: string[]) {
+  const markerIndex = lines.findIndex((line) => correctHeaderPattern.test(line) || correctPattern.test(line));
+  if (markerIndex === -1) {
+    return { promptLines: lines, correctLines: [] as string[] };
+  }
+
+  const markerLine = lines[markerIndex];
+  const inlineCorrect = markerLine.match(correctPattern)?.[5]?.trim();
+  return {
+    promptLines: lines.slice(0, markerIndex),
+    correctLines: [inlineCorrect, ...lines.slice(markerIndex + 1)].filter((line): line is string => Boolean(line))
+  };
+}
+
+function extractBracketAnswers(lines: string[]) {
+  return lines.flatMap((line) =>
+    Array.from(line.matchAll(/\[([^\]]+)\]/g))
+      .map((match) => cleanLine(match[1]))
+      .filter(Boolean)
+  );
+}
+
 function detectOptionLines(lines: string[]) {
-  return lines
-    .filter((line) => optionPattern.test(line))
-    .map((line) => line.replace(optionPattern, "").replace(/^[✓✔]\s*/, "").trim())
-    .filter(Boolean);
+  const options: string[] = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+
+    if (optionPattern.test(line)) {
+      options.push(stripSelectionMarks(line.replace(optionPattern, "")));
+      continue;
+    }
+
+    if (optionMarkerPattern.test(line) && lines[index + 1]) {
+      options.push(stripSelectionMarks(lines[index + 1]));
+      index += 1;
+    }
+  }
+
+  return options.filter(Boolean);
+}
+
+function isOptionLine(line: string) {
+  return optionPattern.test(line) || optionMarkerPattern.test(line);
+}
+
+function detectBankOptions(lines: string[]) {
+  const labeledOptions = detectOptionLines(lines);
+  const shortOptions = lines.filter(
+    (line) =>
+      !isOptionLine(line) &&
+      !/^seleccione una:?$/i.test(line) &&
+      !correctHeaderPattern.test(line) &&
+      !correctPattern.test(line) &&
+      !isUiNoise(line) &&
+      !line.includes("[") &&
+      line.length >= 2 &&
+      line.length <= 42 &&
+      !/[.:?]$/.test(line)
+  );
+
+  return unique([...labeledOptions, ...shortOptions]);
+}
+
+function isUiNoise(line: string) {
+  return /^(reinterpretar|tabla vacia|tabla vacía|respuestas|texto ocr original|lineas detectadas|líneas detectadas|multiple choice|drag and drop|tabla|enunciado|filas|columnas|blank|agregar|guardar importacion|guardar importación|constructor de tabla|opciones arrastrables y distractores)$/i.test(
+    line.trim()
+  );
 }
 
 function detectCorrectAnswer(lines: string[], options: string[]) {
-  const explicit = lines.map((line) => line.match(correctPattern)?.[2]?.trim()).find(Boolean);
+  const { correctLines } = splitCorrectSection(lines);
+  if (correctLines.length > 0) {
+    const correctText = stripSelectionMarks(correctLines.join(" "));
+    const matchingOption = options.find((option) => correctText.includes(option) || option.includes(correctText));
+    return matchingOption ?? correctText;
+  }
+
+  const explicit = lines.map((line) => line.match(correctPattern)?.[5]?.trim()).find(Boolean);
   if (explicit) {
-    return explicit;
+    return stripSelectionMarks(explicit);
   }
 
-  const marked = lines.find((line) => /^[*✓✔]/.test(line.trim()));
+  const marked = lines.find((line) => /^[*✓✔]/.test(line.trim()) || /[✓✔]\s*$|\sO\)?$/i.test(line.trim()));
   if (marked) {
-    return marked.replace(/^([*✓✔]\s*)?/, "").replace(optionPattern, "").trim();
+    return stripSelectionMarks(marked.replace(optionPattern, ""));
   }
 
-  return options[0] ?? "";
+  return "";
 }
 
 function makeDragSuggestion(text: string, lines: string[]): QuestionInput {
-  const optionLines = detectOptionLines(lines);
-  const statement = lines.find((line) => /completar|complete|arrastr|blank|espacio/i.test(line)) ?? "Completar la frase:";
-  const phraseLines = lines.filter((line) => !optionPattern.test(line) && line !== statement);
+  const { promptLines, correctLines } = splitCorrectSection(lines);
+  const optionLines = detectBankOptions(promptLines);
+  const optionValues = new Set(optionLines);
+  const bracketAnswers = extractBracketAnswers(correctLines);
+  const statement =
+    promptLines.find((line) => /completar|complete|arrastr|blank|espacio|supuestos|palabras/i.test(line) && !optionValues.has(line)) ??
+    promptLines.find((line) => line.length > 45 && !optionValues.has(line)) ??
+    "Completar la frase:";
+  const phraseLines = promptLines.filter((line) => !isOptionLine(line) && !optionValues.has(line));
   const phrase = phraseLines.join(" ") || text;
-  const bracketMatches = Array.from(phrase.matchAll(/\[([^\]]+)\]|\(([^\)]+)\)|_{2,}/g));
-  const correctAnswers = bracketMatches
+  const phraseBracketMatches = Array.from(phrase.matchAll(/\[([^\]]+)\]|\(([^)]+)\)|_{2,}/g));
+  const phraseAnswers = phraseBracketMatches
     .map((match) => match[1] ?? match[2] ?? "")
     .filter((value) => value && !/_{2,}/.test(value));
+  const correctAnswers = bracketAnswers.length > 0 ? bracketAnswers : phraseAnswers;
 
   let renderedPhrase = phrase;
-  for (const answer of correctAnswers) {
+  for (const answer of phraseAnswers) {
     renderedPhrase = renderedPhrase.replace(`[${answer}]`, "__blank__").replace(`(${answer})`, "__blank__");
   }
 
+  const inferredBlankCount = correctAnswers.length > 0 ? correctAnswers.length : inferBlankCount(renderedPhrase, optionLines.length);
   if (!renderedPhrase.includes("__blank__")) {
-    renderedPhrase = `${renderedPhrase} __blank__`;
+    renderedPhrase = `${renderedPhrase} ${Array.from({ length: inferredBlankCount }, () => "__blank__").join(" ")}`;
   }
 
-  const fallbackAnswers = correctAnswers.length > 0 ? correctAnswers : optionLines.slice(0, 1);
+  const fallbackAnswers = correctAnswers.length > 0 ? correctAnswers : Array.from({ length: inferredBlankCount }, () => "");
   const draggableOptions = unique([...optionLines, ...fallbackAnswers]);
 
   return {
@@ -59,16 +143,42 @@ function makeDragSuggestion(text: string, lines: string[]): QuestionInput {
     statement,
     textParts: renderedPhrase.split(/(__blank__)/).map(cleanLine).filter(Boolean),
     draggableOptions: draggableOptions.length > 0 ? draggableOptions : ["opcion correcta", "distractor"],
-    correctAnswers: fallbackAnswers.length > 0 ? fallbackAnswers : ["opcion correcta"],
+    correctAnswers: fallbackAnswers.length > 0 ? fallbackAnswers : [""],
     ocrText: text
   };
 }
 
+function inferBlankCount(phrase: string, optionCount: number) {
+  const explicitBlanks = (phrase.match(/__blank__|_{2,}|\[\s*\]|\(\s*\)|□/g) ?? []).length;
+  if (explicitBlanks > 0) {
+    return explicitBlanks;
+  }
+
+  const commaGaps = (phrase.match(/,\s*,|:\s*,|,\s*\./g) ?? []).length;
+  if (commaGaps > 0) {
+    return Math.min(Math.max(commaGaps + 1, 1), Math.max(optionCount, 1));
+  }
+
+  if (optionCount >= 4) {
+    return 4;
+  }
+
+  return Math.max(optionCount, 1);
+}
+
 function makeMultipleChoiceSuggestion(text: string, lines: string[]): QuestionInput {
-  const options = unique(detectOptionLines(lines));
-  const statementLines = lines.filter((line) => !optionPattern.test(line) && !correctPattern.test(line));
-  const statement = statementLines[0] ?? lines[0] ?? "Pregunta importada";
-  const correctAnswer = detectCorrectAnswer(lines, options) || options[0] || "opcion correcta";
+  const { promptLines } = splitCorrectSection(lines);
+  const options = unique(detectOptionLines(promptLines));
+  const optionValues = new Set(options);
+  const statementLines = promptLines.filter(
+    (line) =>
+      !isOptionLine(line) &&
+      !optionValues.has(stripSelectionMarks(line)) &&
+      !correctPattern.test(line) &&
+      !/^seleccione una:?$/i.test(line)
+  );
+  const statement = statementLines[0] ?? promptLines[0] ?? lines[0] ?? "Pregunta importada";
+  const correctAnswer = detectCorrectAnswer(lines, options);
   const safeOptions = unique([...options, correctAnswer]).filter(Boolean);
 
   return {
@@ -81,8 +191,38 @@ function makeMultipleChoiceSuggestion(text: string, lines: string[]): QuestionIn
 }
 
 function makeTableSuggestion(text: string, lines: string[]): QuestionInput {
-  const options = unique([...detectOptionLines(lines), ...lines.filter((line) => line.length <= 40)]).slice(0, 12);
+  const { promptLines, correctLines } = splitCorrectSection(lines);
+  const options = unique([...detectBankOptions(promptLines), ...extractBracketAnswers(correctLines)]).slice(0, 16);
   const baseOptions = options.length > 0 ? options : ["By", "Vector Base", "costo de oportunidad", "valor marginal"];
+  const bracketRows = correctLines
+    .map((line) => extractBracketAnswers([line]))
+    .filter((answers) => answers.length > 0);
+
+  if (bracketRows.length > 0) {
+    const rows = bracketRows.length;
+    const columns = Math.max(...bracketRows.map((row) => row.length), 1);
+    const cells = Array.from({ length: rows * columns }, (_, index) => {
+      const row = Math.floor(index / columns);
+      const col = index % columns;
+      const answer = bracketRows[row]?.[col] ?? "";
+      return {
+        row,
+        col,
+        content: answer ? "" : "",
+        isBlank: Boolean(answer),
+        correctAnswer: answer
+      };
+    });
+
+    return {
+      type: "table_drag_and_drop",
+      statement: promptLines[0] ?? lines[0] ?? "Completar la tabla:",
+      table: { rows, columns, cells },
+      draggableOptions: baseOptions,
+      ocrText: text
+    };
+  }
+
   const rows = 4;
   const columns = 4;
   const cells = Array.from({ length: rows * columns }, (_, index) => {
@@ -101,12 +241,8 @@ function makeTableSuggestion(text: string, lines: string[]): QuestionInput {
 
   return {
     type: "table_drag_and_drop",
-    statement: lines[0] ?? "Completar la tabla:",
-    table: {
-      rows,
-      columns,
-      cells
-    },
+    statement: promptLines[0] ?? lines[0] ?? "Completar la tabla:",
+    table: { rows, columns, cells },
     draggableOptions: baseOptions,
     ocrText: text
   };
@@ -118,10 +254,18 @@ export function parseQuestionFromOcr(text: string): QuestionInput {
     .map(cleanLine)
     .filter(Boolean);
 
+  const { promptLines, correctLines } = splitCorrectSection(lines);
+  const bankOptions = detectBankOptions(promptLines);
+  const hasManyBankOptions = bankOptions.length >= 4;
+  const hasMultipleChoiceMarkers = promptLines.some((line) => isOptionLine(line));
+  const hasBracketedCorrectTable = correctLines.some((line) => /\[[^\]]+\]/.test(line));
+  const shouldBeTable =
+    (hasBracketedCorrectTable || /tabla|simplex|celda|cuadro|fila|columna|vector base|slack|by\b|var\.?base|coeficientes de var\.?base/i.test(text)) &&
+    !hasMultipleChoiceMarkers &&
+    !/supuestos|proporcionalidad|aditividad|divisibilidad|certidumbre|no negatividad/i.test(promptLines.join(" "));
   const shouldBeDrag =
-    /__+|completar|complete|arrastr|drag|drop|blank|espacio|cajas/i.test(text) &&
-    !/^[A-Da-d][\).:-]/m.test(text);
-  const shouldBeTable = /tabla|simplex|celda|cuadro|fila|columna|vector base|slack|by\b|var\.?base/i.test(text);
+    (/__+|completar|complete|arrastr|drag|drop|blank|espacio|cajas|supuestos|palabras simples/i.test(text) || (hasManyBankOptions && !hasMultipleChoiceMarkers)) &&
+    !hasMultipleChoiceMarkers;
 
   if (shouldBeTable) {
     return makeTableSuggestion(text, lines);
