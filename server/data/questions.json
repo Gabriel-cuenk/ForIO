@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1",
+    "type": "multiple_choice",
+    "statement": "El costo de oportunidad se visualiza en...",
+    "options": [
+      "la línea del cálculo de la condición de optimalidad",
+      "la función objetivo",
+      "las restricciones",
+      "el recurso"
+    ],
+    "correctAnswer": "la línea del cálculo de la condición de optimalidad"
+  },
+  {
+    "id": "2",
+    "type": "drag_and_drop",
+    "statement": "Completar la frase:",
+    "textParts": [
+      "El",
+      "__blank__",
+      "se visualiza en la línea del cálculo de la condición de optimalidad y me permite decidir cuánto",
+      "__blank__",
+      "el coeficiente en la",
+      "__blank__"
+    ],
+    "draggableOptions": [
+      "costo de oportunidad",
+      "aumentar",
+      "función objetivo",
+      "valor marginal",
+      "recurso",
+      "disminuir"
+    ],
+    "correctAnswers": [
+      "costo de oportunidad",
+      "aumentar",
+      "función objetivo"
+    ]
+  },
+  {
+    "id": "3",
+    "type": "drag_and_drop",
+    "statement": "Completar la idea de análisis de sensibilidad:",
+    "textParts": [
+      "El",
+      "__blank__",
+      "indica cuánto mejora la solución óptima si aumenta en una unidad un",
+      "__blank__",
+      "siempre que se mantenga dentro del rango permitido por las",
+      "__blank__"
+    ],
+    "draggableOptions": [
+      "valor marginal",
+      "recurso",
+      "restricciones",
+      "coeficiente",
+      "costo de oportunidad",
+      "función objetivo"
+    ],
+    "correctAnswers": [
+      "valor marginal",
+      "recurso",
+      "restricciones"
+    ]
+  }
+]
