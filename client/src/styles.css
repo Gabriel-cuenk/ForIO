@@ -326,6 +326,12 @@ h2 {
   text-align: center;
 }
 
+.file-picker.dragging {
+  background: #e7eefc;
+  border-color: #2454d6;
+  box-shadow: 0 0 0 3px rgba(36, 84, 214, 0.12);
+}
+
 .file-picker input {
   display: none;
 }
@@ -333,6 +339,30 @@ h2 {
 .helper-text {
   color: #5d6b82;
   margin: 0;
+}
+
+.ocr-details {
+  background: #f8fafc;
+  border: 1px solid #d8e0ed;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+}
+
+.ocr-details summary {
+  color: #30405a;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.ocr-details ol {
+  color: #43516a;
+  margin: 10px 0 0;
+  padding-left: 22px;
+}
+
+.ocr-details li + li {
+  margin-top: 6px;
 }
 
 .import-review {

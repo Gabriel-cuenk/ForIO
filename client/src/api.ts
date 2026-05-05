@@ -4,6 +4,15 @@ export type OcrUploadResult = {
   filename: string;
   provider: string;
   text: string;
+  lines: string[];
+  blocks?: Array<{
+    id?: string;
+    blockType?: string;
+    text?: string;
+    confidence?: number;
+    page?: number;
+  }>;
+  confidence?: number;
   parsedQuestion: QuestionInput;
 };
 

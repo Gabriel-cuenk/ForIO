@@ -1,3 +1,4 @@
+import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import multer from "multer";
@@ -66,6 +67,9 @@ app.post("/api/ocr/upload", upload.array("images"), async (req, res) => {
           filename: file.originalname,
           provider: ocr.provider,
           text: ocr.text,
+          lines: ocr.lines,
+          blocks: ocr.blocks,
+          confidence: ocr.confidence,
           parsedQuestion
         };
       })

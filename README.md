@@ -8,6 +8,7 @@ Proyecto fullstack rapido para estudiar con preguntas tipo Quizizz. Incluye prac
 - Backend: Node.js + Express + TypeScript
 - Drag and Drop: `@dnd-kit/core`
 - OCR local: `tesseract.js`
+- OCR opcional: AWS Textract con AWS SDK v3
 - Persistencia: `server/data/questions.json`
 
 ## Requisitos
@@ -21,6 +22,12 @@ Desde la raiz del proyecto:
 
 ```bash
 npm install
+```
+
+Copiá `.env.example` a `.env` si querés configurar OCR o puerto:
+
+```bash
+cp .env.example .env
 ```
 
 ## Correr en desarrollo
@@ -71,9 +78,9 @@ POST /api/ocr/parse-question
 
 ## Importar capturas con OCR
 
-Entra a `/admin/import`, subi una o varias imagenes y el backend va a:
+Entra a `/admin/import`, subi una o varias imagenes, arrastralas al area de importacion o pega una captura con `Ctrl+V`. El backend va a:
 
-1. Leer el texto con `tesseract.js`.
+1. Leer el texto con el proveedor configurado en `OCR_PROVIDER`.
 2. Mostrar el texto OCR original.
 3. Proponer una pregunta editable.
 4. Permitir corregir tipo, enunciado, opciones, respuesta correcta, blanks y tablas.
@@ -83,18 +90,34 @@ El texto OCR original se guarda en cada pregunta como `ocrText` para revisar err
 
 Si el OCR detecta palabras como `tabla`, `simplex`, `fila`, `columna`, `Vector Base`, `By` o `slack`, intenta proponer una pregunta `table_drag_and_drop`. La deteccion de coordenadas no es perfecta: la pantalla de revision permite reconstruir la tabla manualmente rapido.
 
-### Cambiar proveedor OCR
+### Proveedores OCR
 
 La abstraccion esta en `server/src/ocrProvider.ts`. Por defecto usa `tesseract.js`, sin servicios externos.
 
-Para preparar un proveedor externo:
+Proveedor local:
 
 ```bash
-OCR_PROVIDER=external
-OCR_API_KEY=tu_api_key
+OCR_PROVIDER=tesseract
 ```
 
-El esqueleto `ExternalOcrProvider` ya esta separado para conectar una API mas precisa cuando quieras.
+Proveedor AWS Textract:
+
+```bash
+OCR_PROVIDER=aws-textract
+AWS_ACCESS_KEY_ID=tu_access_key
+AWS_SECRET_ACCESS_KEY=tu_secret_key
+AWS_REGION=us-east-1
+```
+
+Fallback opcional a Tesseract si falla AWS Textract:
+
+```bash
+OCR_FALLBACK_TO_TESSERACT=true
+```
+
+El endpoint `POST /api/ocr/upload` devuelve texto completo, lineas detectadas, bloques de Textract cuando existan y confidence promedio si esta disponible.
+
+No se usa AWS Rekognition ni variables relacionadas a reconocimiento facial; la app solo necesita OCR para leer capturas de preguntas.
 
 ## Formato de preguntas
 

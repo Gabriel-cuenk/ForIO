@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import type { DragEvent } from "react";
 import {
   ArrowUp,
   ArrowDown,
@@ -343,16 +344,34 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
   const [drafts, setDrafts] = useState<ImportDraft[]>([]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
+  const [isDragging, setIsDragging] = useState(false);
 
-  async function uploadFiles(files: FileList | null) {
-    if (!files?.length) {
+  useEffect(() => {
+    function handlePaste(event: ClipboardEvent) {
+      const files = Array.from(event.clipboardData?.files ?? []).filter((file) => file.type.startsWith("image/"));
+      if (files.length === 0) {
+        return;
+      }
+
+      event.preventDefault();
+      uploadFiles(files);
+    }
+
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, []);
+
+  async function uploadFiles(files: File[] | FileList | null) {
+    const imageFiles = Array.from(files ?? []).filter((file) => file.type.startsWith("image/"));
+    if (!imageFiles.length) {
+      setMessage("No encontre imagenes para importar.");
       return;
     }
 
     setBusy(true);
     setMessage("Procesando OCR...");
     try {
-      const response = await uploadOcrImages(Array.from(files));
+      const response = await uploadOcrImages(imageFiles);
       setDrafts(
         response.results.map((result) => ({
           ...result,
@@ -365,6 +384,12 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
     } finally {
       setBusy(false);
     }
+  }
+
+  function handleDrop(event: DragEvent<HTMLElement>) {
+    event.preventDefault();
+    setIsDragging(false);
+    uploadFiles(event.dataTransfer.files);
   }
 
   async function reparse(index: number) {
@@ -408,16 +433,26 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
 
   return (
     <main className="main import-layout">
-      <section className="editor-panel import-drop">
+      <section
+        className="editor-panel import-drop"
+        onDragEnter={(event) => {
+          event.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragOver={(event) => event.preventDefault()}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={handleDrop}
+      >
         <div className="section-title">
           <h1>Importar desde capturas</h1>
           <FileImage size={28} />
         </div>
-        <label className="file-picker">
+        <label className={`file-picker ${isDragging ? "dragging" : ""}`}>
           <Upload size={24} />
-          <span>Subir una o varias imagenes</span>
+          <span>Subir, pegar o arrastrar imagenes</span>
           <input accept="image/*" multiple type="file" onChange={(event) => uploadFiles(event.target.files)} />
         </label>
+        <p className="helper-text">Recorta una captura y pegala con Ctrl+V aca. Tambien podes soltar archivos o elegirlos desde el explorador.</p>
         <p className="helper-text">El OCR no intenta ser perfecto: lee la imagen, propone una pregunta y deja todo editable.</p>
         {message ? <p className="form-message">{message}</p> : null}
       </section>
@@ -558,8 +593,24 @@ function ImportDraftEditor({
       <label>
         Texto OCR original
         <textarea value={draft.text} onChange={(event) => onDraftTextChange(event.target.value)} />
-        <small>Archivo: {draft.filename}. Proveedor: {draft.provider}</small>
+        <small>
+          Archivo: {draft.filename}. Proveedor: {draft.provider}
+          {typeof draft.confidence === "number" ? `. Confianza: ${draft.confidence.toFixed(1)}%` : ""}
+          {draft.lines?.length ? `. Lineas: ${draft.lines.length}` : ""}
+          {draft.blocks?.length ? `. Bloques: ${draft.blocks.length}` : ""}
+        </small>
       </label>
+
+      {draft.lines?.length ? (
+        <details className="ocr-details">
+          <summary>Lineas detectadas</summary>
+          <ol>
+            {draft.lines.map((line, lineIndex) => (
+              <li key={`${line}-${lineIndex}`}>{line}</li>
+            ))}
+          </ol>
+        </details>
+      ) : null}
 
       <div className="segmented">
         <button className={question.type === "multiple_choice" ? "active" : ""} type="button" onClick={() => setType("multiple_choice")}>
