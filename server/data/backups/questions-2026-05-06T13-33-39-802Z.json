@@ -255,8 +255,7 @@
       "Traduccion automatica de textos",
       "Diseño de campanas políticas"
     ],
-    "correctAnswer": "Diseño de campanas políticas",
-    "ocrText": "Una aplicacion típica de programación lineal es:\nSeleccione una:\na.\nDeterminacion de la mezcla óptima de produccion\nb.\nEdicion de imagenes\nC.\nTraduccion automatica de textos\nd. Diseño de campanas políticas",
+    "correctAnswer": "Determinacion de la mezcla óptima de produccion",
     "id": "1777995115944-afa996377099c8"
   },
   {
@@ -1360,17 +1359,6 @@
   },
   {
     "type": "multiple_choice",
-    "statement": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores",
-    "options": [
-      "verdadero",
-      "falso"
-    ],
-    "correctAnswer": "verdadero",
-    "ocrText": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores\nenteros",
-    "id": "1778040438468-098e1bb9e1eb98"
-  },
-  {
-    "type": "multiple_choice",
     "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica",
     "options": [
       "verdadero",
@@ -1519,5 +1507,87 @@
     "correctAnswer": "Sólo puede estar vigente una de las dos en cualquier momento",
     "ocrText": "En las restricciones “o bien” el M suficientemente grande convierte las restricciones simultáneas garantizando que\nSeleccione una\n\n© a. Sólo pueden estar vigente las dos en todo momento\n\nO) b. Puede estar vigente una de las dos en algún momento\n\nO €. Puede estar vigente cualquiera de las dos en cualquier momento\n\n© d. Sólo puede estar vigente una de las dos en cualquier momento",
     "id": "1778041414534-5c02bbfaac7e98"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Plano de corte o o también conocido como método Gomory toma de la tabla del simplex",
+    "options": [
+      "Cualquier fila de variables con valores decimales y enteros",
+      "La última fila de variables con valores decimales y enteros",
+      "Únicamente una fila de variables con valores enteros",
+      "Todas las filas de variables con valores decimales y enteros"
+    ],
+    "correctAnswer": "Cualquier fila de variables con valores decimales y enteros",
+    "id": "1778041481876-72118e1507b15"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Gomory subdivide",
+    "options": [
+      "Mantiene las restricciones originales y elimina las decimales",
+      "Subdivide en dos problemas cada vez",
+      "El problema original en varios subproblemas",
+      "Mantiene la integridad del problema"
+    ],
+    "correctAnswer": "Mantiene la integridad del problema",
+    "id": "1778041537770-fdb877dd042c2"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La toma de decisiones de invertir o no en un proyecto suele someterse a evaluaciones y prioridades de acuerdo al presupuesto limitado y no se puede resolver con programacion lineal entera",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "id": "1778074128154-9b6edbba7d9aa"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación entera es un programa único que ha combinado variables y que implica una combinación de variables enteras y continuas",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "La programación entera es un programa único que ha combinado variables y que implica una combinación de variables enteras y continuas\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778074151644-6284061610bad8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Verdadero",
+    "ocrText": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una\nherramienta para resolver esta situación es programación lineal entera\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Verdadero'",
+    "id": "1778074171829-151421d9fd013"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En un problema de cobertura de conjunto las variables son:",
+    "options": [
+      "Algunas continuas y otras binarias.",
+      "Todas enteras.",
+      "Todas binarias",
+      "Algunas enteras y otras binarias."
+    ],
+    "correctAnswer": "Todas binarias",
+    "ocrText": "En un problema de cobertura de conjunto las variables son:\nSeleccione una:\na. Algunas continuas y otras binarias.\nb. Todas enteras.\nC. Todas binarias\nd. Algunas enteras y otras binarias.",
+    "id": "1778074205490-c4e3c566e7b2c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo entero puro es",
+    "options": [
+      "un problema en el que se exige que algunas variables de decisión tengan valores enteros",
+      "un problema en el que se exige que algunas las variables de decisión no tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan no valores enteros"
+    ],
+    "correctAnswer": "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "ocrText": "Un modelo entero puro es\nSeleccione una:\na. un problema en el que se exige que algunas variables de decisión tengan valores enteros\nb. un problema en el que se exige que algunas las variables de decisión no tengan valores enteros\nC. un problema en el que se exige que todas las variables de decisión tengan valores enteros\nd. un problema en el que se exige que todas las variables de decisión tengan no valores enteros\nLa respuesta correcta es: un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "id": "1778074350488-fff4b05c06785"
   }
 ]

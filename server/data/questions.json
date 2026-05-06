@@ -1576,5 +1576,29 @@
     "correctAnswer": "Todas binarias",
     "ocrText": "En un problema de cobertura de conjunto las variables son:\nSeleccione una:\na. Algunas continuas y otras binarias.\nb. Todas enteras.\nC. Todas binarias\nd. Algunas enteras y otras binarias.",
     "id": "1778074205490-c4e3c566e7b2c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo entero puro es",
+    "options": [
+      "un problema en el que se exige que algunas variables de decisión tengan valores enteros",
+      "un problema en el que se exige que algunas las variables de decisión no tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan no valores enteros"
+    ],
+    "correctAnswer": "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "ocrText": "Un modelo entero puro es\nSeleccione una:\na. un problema en el que se exige que algunas variables de decisión tengan valores enteros\nb. un problema en el que se exige que algunas las variables de decisión no tengan valores enteros\nC. un problema en el que se exige que todas las variables de decisión tengan valores enteros\nd. un problema en el que se exige que todas las variables de decisión tengan no valores enteros\nLa respuesta correcta es: un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "id": "1778074350488-fff4b05c06785"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los modelos en los que las restricciones se satisfacen al mismo tiempo (Uno - u\notro) o son dependientes (Si - entonces), utilizan variables binarias auxiliares. La transformación utiliza un artificio matemático para presentar la restricción especial como restricciones \"and\" (\"y\").",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "Los modelos en los que las restricciones se satisfacen al mismo tiempo (Uno - u\notro) 0 son dependientes (Si - entonces), utilizan variables binarias auxiliares. La transformación utiliza un artificio matemático para presentar la\nrestricción especial como restricciones \"and\" (\"y\").\nSeleccione una:\n<\n>\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778074419801-0a46f862a321d8"
   }
 ]
