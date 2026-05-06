@@ -34,10 +34,11 @@ import type {
   DragTable,
   MultipleChoiceQuestion,
   Question,
-  QuestionInput,
   QuestionType,
   TableDragAndDropQuestion
 } from "./types/questions";
+
+
 
 const emptyMc: Omit<MultipleChoiceQuestion, "id"> = {
   type: "multiple_choice",
@@ -126,6 +127,11 @@ function normalizeQuestionInput(question: QuestionInput): QuestionInput {
 type ImportDraft = OcrUploadResult & {
   id: string;
 };
+
+type QuestionInput =
+  | Omit<MultipleChoiceQuestion, "id">
+  | Omit<DragAndDropQuestion, "id">
+  | Omit<TableDragAndDropQuestion, "id">;
 
 type TableImportBuilder = {
   statement: string;
@@ -661,14 +667,16 @@ function ImportPage({ onSaved }: { onSaved: () => Promise<void> }) {
     }
 
     if (result.parsedQuestion.type === "table_drag_and_drop") {
-      setTableBuilder((current) => ({
-        ...current,
-        statement: result.parsedQuestion.statement || current.statement,
-        table: result.parsedQuestion.table,
-        options: uniqueList([...current.options, ...result.parsedQuestion.draggableOptions])
-      }));
-      return;
-    }
+  const parsed = result.parsedQuestion as Omit<TableDragAndDropQuestion, "id">;
+
+  setTableBuilder((current) => ({
+    ...current,
+    statement: parsed.statement || current.statement,
+    table: parsed.table,
+    options: uniqueList([...current.options, ...parsed.draggableOptions])
+  }));
+  return;
+}
 
     const statement = firstStatementLine(lines, result.text);
     const options = extractShortOptionsFromLines(lines);
