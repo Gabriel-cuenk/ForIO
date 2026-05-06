@@ -828,6 +828,21 @@ small {
 .question-list {
   display: grid;
   gap: 12px;
+  max-height: 68vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.search-box {
+  margin-bottom: 16px;
+}
+
+.list-count {
+  background: #edf1f7;
+  border-radius: 999px;
+  color: #30405a;
+  font-weight: 900;
+  padding: 6px 10px;
 }
 
 .question-item {

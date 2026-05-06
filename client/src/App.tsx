@@ -1314,6 +1314,23 @@ function questionTypeLabel(type: QuestionType) {
   return "Tabla drag";
 }
 
+function questionSearchText(question: Question) {
+  if (question.type === "multiple_choice") {
+    return [question.statement, question.type, ...question.options, question.correctAnswer].join(" ").toLowerCase();
+  }
+  if (question.type === "drag_and_drop") {
+    return [question.statement, question.type, ...question.textParts, ...question.draggableOptions, ...question.correctAnswers].join(" ").toLowerCase();
+  }
+  return [
+    question.statement,
+    question.type,
+    ...question.draggableOptions,
+    ...question.table.cells.flatMap((cell) => [cell.content, cell.correctAnswer ?? "", ...(cell.acceptedAnswers ?? [])])
+  ]
+    .join(" ")
+    .toLowerCase();
+}
+
 function AdminPage({ questions, onChange }: { questions: Question[]; onChange: () => Promise<void> }) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [type, setType] = useState<QuestionType>("multiple_choice");
@@ -1326,12 +1343,20 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
   const [table, setTable] = useState<DragTable>(emptyTable.table);
   const [tableOptions, setTableOptions] = useState<string[]>(emptyTable.draggableOptions);
   const [message, setMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const blankCount = useMemo(
     () =>
       parseDragTextParts(textPartsRaw).filter((part) => part === "__blank__").length,
     [textPartsRaw]
   );
+  const filteredQuestions = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) {
+      return questions;
+    }
+    return questions.filter((question) => questionSearchText(question).includes(term));
+  }, [questions, searchTerm]);
 
   function resetForm(nextType: QuestionType = type) {
     setEditingId(null);
@@ -1477,9 +1502,16 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
       </section>
 
       <section className="list-panel">
-        <h1>Preguntas cargadas</h1>
+        <div className="section-title">
+          <h1>Preguntas cargadas</h1>
+          <span className="list-count">{filteredQuestions.length}/{questions.length}</span>
+        </div>
+        <label className="search-box">
+          Buscar
+          <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Enunciado, tipo, opcion..." />
+        </label>
         <div className="question-list">
-          {questions.map((question) => (
+          {filteredQuestions.map((question) => (
             <article className="question-item" key={question.id}>
               <div>
                 <span className="type-pill">{questionTypeLabel(question.type)}</span>
@@ -1495,6 +1527,7 @@ function AdminPage({ questions, onChange }: { questions: Question[]; onChange: (
               </div>
             </article>
           ))}
+          {filteredQuestions.length === 0 ? <p className="helper-text">No hay preguntas que coincidan con la busqueda.</p> : null}
         </div>
       </section>
     </main>

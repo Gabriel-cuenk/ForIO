@@ -255,8 +255,7 @@
       "Traduccion automatica de textos",
       "Diseño de campanas políticas"
     ],
-    "correctAnswer": "Diseño de campanas políticas",
-    "ocrText": "Una aplicacion típica de programación lineal es:\nSeleccione una:\na.\nDeterminacion de la mezcla óptima de produccion\nb.\nEdicion de imagenes\nC.\nTraduccion automatica de textos\nd. Diseño de campanas políticas",
+    "correctAnswer": "Determinacion de la mezcla óptima de produccion",
     "id": "1777995115944-afa996377099c8"
   },
   {
@@ -1360,17 +1359,6 @@
   },
   {
     "type": "multiple_choice",
-    "statement": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores",
-    "options": [
-      "verdadero",
-      "falso"
-    ],
-    "correctAnswer": "verdadero",
-    "ocrText": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores\nenteros",
-    "id": "1778040438468-098e1bb9e1eb98"
-  },
-  {
-    "type": "multiple_choice",
     "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica",
     "options": [
       "verdadero",
@@ -1453,5 +1441,127 @@
     ],
     "correctAnswer": "Lo suficientemente grande como para no restringir en forma artificial a las variables xj.",
     "id": "1778041204519-a8a5b8dc481b4"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En el problema de cargo fijo se utilizan variables enteras binarias auxiliares para manejar la continuidad en la función de costo objetivo.",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "verdadero",
+    "id": "1778041223378-a6f5e6050c9f28"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores enteros.",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "verdadero",
+    "id": "1778041234073-82879119af918"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica incurre en dos tipos de costos: un costo fijo necesario para iniciar la actividad y un costo variable proporcional al nivel de la actividad.",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "verdadero",
+    "id": "1778041247869-bb28913eb5e87"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica incurre en dos tipos de costos: un costo fijo de acuerdo al nivel de la actividad y un costo variable de la actividad.",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "falso",
+    "id": "1778041293796-f3d28594fb329"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El costo de penalización por retrasos en los modelos de PL Entera es",
+    "options": [
+      "O a. Proporcional",
+      "O b. Equilibrado",
+      "O e. Ajustado",
+      "O de Equitativo"
+    ],
+    "correctAnswer": "O a. Proporcional",
+    "ocrText": "El costo de penalización por retrasos en los modelos de PL Entera es\nSeleccione una:\n\nO a. Proporcional\n\nO b. Equilibrado\n\nO e. Ajustado\n\nO de Equitativo",
+    "id": "1778041346144-5f9f41882ac75"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En las restricciones “o bien” el M suficientemente grande convierte las restricciones simultáneas garantizando que\n",
+    "options": [
+      " Sólo pueden estar vigente las dos en todo momento\n",
+      "Puede estar vigente una de las dos en algún momento\n",
+      "Puede estar vigente cualquiera de las dos en cualquier momento",
+      "Sólo puede estar vigente una de las dos en cualquier momento"
+    ],
+    "correctAnswer": "Sólo puede estar vigente una de las dos en cualquier momento",
+    "ocrText": "En las restricciones “o bien” el M suficientemente grande convierte las restricciones simultáneas garantizando que\nSeleccione una\n\n© a. Sólo pueden estar vigente las dos en todo momento\n\nO) b. Puede estar vigente una de las dos en algún momento\n\nO €. Puede estar vigente cualquiera de las dos en cualquier momento\n\n© d. Sólo puede estar vigente una de las dos en cualquier momento",
+    "id": "1778041414534-5c02bbfaac7e98"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Plano de corte o o también conocido como método Gomory toma de la tabla del simplex",
+    "options": [
+      "Cualquier fila de variables con valores decimales y enteros",
+      "La última fila de variables con valores decimales y enteros",
+      "Únicamente una fila de variables con valores enteros",
+      "Todas las filas de variables con valores decimales y enteros"
+    ],
+    "correctAnswer": "Cualquier fila de variables con valores decimales y enteros",
+    "id": "1778041481876-72118e1507b15"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Gomory subdivide",
+    "options": [
+      "Mantiene las restricciones originales y elimina las decimales",
+      "Subdivide en dos problemas cada vez",
+      "El problema original en varios subproblemas",
+      "Mantiene la integridad del problema"
+    ],
+    "correctAnswer": "Mantiene la integridad del problema",
+    "id": "1778041537770-fdb877dd042c2"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La toma de decisiones de invertir o no en un proyecto suele someterse a evaluaciones y prioridades de acuerdo al presupuesto limitado y no se puede resolver con programacion lineal entera",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "id": "1778074128154-9b6edbba7d9aa"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación entera es un programa único que ha combinado variables y que implica una combinación de variables enteras y continuas",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "La programación entera es un programa único que ha combinado variables y que implica una combinación de variables enteras y continuas\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778074151644-6284061610bad8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Verdadero",
+    "ocrText": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una\nherramienta para resolver esta situación es programación lineal entera\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Verdadero'",
+    "id": "1778074171829-151421d9fd013"
   }
 ]
