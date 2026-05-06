@@ -1,5 +1,5 @@
 import type { Question, QuestionInput } from "./types/questions";
-
+const API_BASE_URL = "https://for-io-server.vercel.app";
 export type OcrUploadResult = {
   filename: string;
   provider: string;
@@ -24,7 +24,7 @@ export type OcrStatus = {
 };
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(url, {
+  const response = await fetch(`${API_BASE_URL}${url}`, {
     headers: { "Content-Type": "application/json" },
     ...options
   });
@@ -80,7 +80,7 @@ export async function uploadOcrImages(files: File[]) {
     formData.append("images", file);
   }
 
-  const response = await fetch("/api/ocr/upload", {
+  const response = await fetch(`${API_BASE_URL}/api/ocr/upload`, {
     method: "POST",
     body: formData
   });
@@ -99,3 +99,4 @@ export function parseQuestionFromText(text: string) {
     body: JSON.stringify({ text })
   });
 }
+
