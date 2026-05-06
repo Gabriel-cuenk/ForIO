@@ -1254,5 +1254,192 @@
     "correctAnswer": "Estudiar el rango de variacion de - infinito a + inifinito",
     "ocrText": "El análisis paramétrico de los bi consiste en\nSeleccione una:\na.\nEstudiar el rango de variacion de + 8\nb.\nEstudiar el rango de variacion de bi a + 8\nC. Estudiar el rango de variacion de Oatoo\nd. Estudiar el rango de variacion de - 00 a + 00\nLa respuesta correcta es: Estudiar el rango de variacion de - 00 a + 00",
     "id": "1778002611815-9d8699731398c"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El costo de oportunidad aporta dos datos al tomador de decisiones (Z--> MAX):",
+    "options": [
+      "Cuanto debe disminuir el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se ganaria por forzar su fabricacion, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente.",
+      "Cuanto debe aumentar el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se perderia por forzar su fabricacion, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente",
+      "Cuanto debe disminuir el coeficiente del funcional de ese producto para que convenga producirlo",
+      "cuanto se perderia por forzar su fabricación, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente.",
+      "Cuanto debe aumentar el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se perderia por forzar su fabricación, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente"
+    ],
+    "correctAnswer": "Cuanto debe aumentar el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se perderia por forzar su fabricación, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente",
+    "ocrText": "El costo de oportunidad aporta dos datos al tomador de decisiones (Z--> MAX):\nSeleccione una:\na.\nCuanto debe disminuir el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se ganaria por forzar su fabricacion, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente.\nb.\nCuanto debe aumentar el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se perderia por forzar su fabricacion, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente\nC.\nCuanto debe disminuir el coeficiente del funcional de ese producto para que convenga producirlo\nd.\ncuanto se perderia por forzar su fabricación, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente.\nLa respuesta correcta es: Cuanto debe aumentar el coeficiente del funcional de ese producto para que convenga producirlo y cuanto se perderia por forzar su fabricación, en caso de decir realizarlo cuando la tabla óptima informa que no es conveniente",
+    "id": "1778002747461-ea2799c8fc26e"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Una variacion en los coeficientes del funcional origina:",
+    "options": [
+      "Oscilaciones dentro de la pendiente del funcional, que implican un cambio en la región factible.",
+      "Oscilaciones en la pendiente de las restricciones que cambien el óptimo.",
+      "Oscilaciones dentro de la pendiente del funcional, que dentro de ciertos limites no cambia el punto óptimo.",
+      "Oscilaciones en la pendiente de las restricciones que cambien el óptimo que implican un cambio en la región factible."
+    ],
+    "correctAnswer": "Oscilaciones dentro de la pendiente del funcional, que dentro de ciertos limites no cambia el punto óptimo.",
+    "ocrText": "Una variacion en los coeficientes del funcional origina:\nSeleccione una:\na.\nOscilaciones dentro de la pendiente del funcional, que implican un cambio en la región factible.\nb.\nOscilaciones en la pendiente de las restricciones que cambien el óptimo.\nC.\nOscilaciones dentro de la pendiente del funcional, que dentro de ciertos limites no cambia el punto óptimo.\nd.\nOscilaciones en la pendiente de las restricciones que cambien el óptimo que implican un cambio en la región factible.\nLa respuesta correcta es: Oscilaciones dentro de la pendiente del funcional, que dentro de ciertos limites no cambia el punto óptimo.",
+    "id": "1778002747461-f44dc307d9f0a8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En el dual hay tantas variables de decision (reales) como",
+    "options": [
+      "Como la cantidad de recursos del primal",
+      "Restricciones hay en el primal",
+      "Coeficientes tiene la funcion objetivo del primal",
+      "Variables de decision hay en el primal"
+    ],
+    "correctAnswer": "Restricciones hay en el primal",
+    "ocrText": "En el dual hay tantas variables de decision (reales) como\nSeleccione una:\na.\nComo la cantidad de recursos del primal\nb. Restricciones hay en el primal\nC.\nCoeficientes tiene la funcion objetivo del primal\nd. Variables de decision hay en el primal\nLa respuesta correcta es: Restricciones hay en el primal",
+    "id": "1778002747461-bc04f744dd45"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Una variacion en los recursos de las restricciones origina:",
+    "options": [
+      "Oscilaciones en la pendiente de las restricciones que cambien el óptimo que implican un cambio en la región factible.",
+      "Desplaza la restricción paralela a si misma, pero si no está saturada, dentro de ciertos limites, el punto optimo sigue siendo el mismo.",
+      "Oscilaciones dentro de la pendiente del funcional, que dentro de ciertos limites no cambia el punto óptimo.",
+      "Desplaza la restricción paralela a si misma, pero si no está saturada, dentro de ciertos limites, el punto óptimo sigue siendo el mismo."
+    ],
+    "correctAnswer": "Desplaza la restricción paralela a si misma, pero si no está saturada, dentro de ciertos limites, el punto óptimo sigue siendo el mismo.",
+    "ocrText": "Una variacion en los recursos de las restricciones origina:\nSeleccione una:\na. Oscilaciones en la pendiente de las restricciones que cambien el óptimo que implican un cambio en la región factible.\nb. Desplaza la restricción paralela a si misma, pero si no está saturada, dentro de ciertos limites, el punto optimo sigue siendo el mismo.\nC. Oscilaciones dentro de la pendiente del funcional, que dentro de ciertos limites no cambia el punto óptimo.\nLa respuesta correcta es: Desplaza la restricción paralela a si misma, pero si no está saturada, dentro de ciertos limites, el punto óptimo sigue siendo el mismo.",
+    "id": "1778002747461-630606569e2c38"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Una variacion en los coeficientes tecnológicos origina:",
+    "options": [
+      "Oscilaciones en la pendiente de las restricciones que no cambien el óptimo.",
+      "Oscilaciones en la pendiente de las restricciones que cambien el óptimo y que implican un cambio en la region factible.",
+      "Oscilaciones en la pendiente de las restricciones que dentro de ciertos limites no cambien el punto óptimo.",
+      "1. Oscilaciones en la pendiente de las restricciones que fuera de ciertos límites no cambien el punto óptimo."
+    ],
+    "correctAnswer": "1. Oscilaciones en la pendiente de las restricciones que fuera de ciertos límites no cambien el punto óptimo.",
+    "ocrText": "Una variacion en los coeficientes tecnológicos origina:\nSeleccione una:\na.\nOscilaciones en la pendiente de las restricciones que no cambien el óptimo.\nb.\nOscilaciones en la pendiente de las restricciones que cambien el óptimo y que implican un cambio en la region factible.\nC.\nOscilaciones en la pendiente de las restricciones que dentro de ciertos limites no cambien el punto óptimo.\nd.\n1. Oscilaciones en la pendiente de las restricciones que fuera de ciertos límites no cambien el punto óptimo.\nLa respuesta correcta es: Oscilaciones en la pendiente de las restricciones que dentro de ciertos limites no cambien el punto óptimo.",
+    "id": "1778002747461-c8d1482fa7ad48"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Si en el primal las variables de decision (reales) representan cantidad a producir sus asociadas en el dual representan",
+    "options": [
+      "Sobrante de recurso",
+      "Sobrante de producción",
+      "Costo de oportunidad",
+      "Valor marginal"
+    ],
+    "correctAnswer": "Costo de oportunidad",
+    "ocrText": "Si en el primal las variables de decision (reales) representan cantidad a producir sus asociadas en el dual representan\nSeleccione una:\na.\nSobrante de recurso\nb.\nSobrante de producción\nC.\nCosto de oportunidad\nd.\nValor marginal\nLa respuesta correcta es: Costo de oportunidad",
+    "id": "1778002747461-b451da3f0d8338"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La tabla óptima del dual es",
+    "options": [
+      "Igual a la óptima del primal",
+      "Igual a la traspuesta cambiada de signo (-AT) del primal",
+      "Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base",
+      "Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que están en la base"
+    ],
+    "correctAnswer": "Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base",
+    "ocrText": "La tabla óptima del dual es\nSeleccione una:\na. Igual a la óptima del primal\nb. Igual a la traspuesta cambiada de signo (-AT) del primal\nC. Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base\nd. Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que están en la base\nLa respuesta correcta es: Igual a la traspuesta (AT) del primal cambiando los signos de las aij de las variables que no están en la base",
+    "id": "1778002764034-c17b5f7bf7e608"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En el problema de cargo fijo se utilizan variables enteras binarias auxiliares para manejar la continuidad en la función de costo objetivo.",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "verdadero",
+    "ocrText": "En el problema de cargo fijo se utilizan variables enteras binarias auxliares para manejar la continuidad en la función de costo objetivo.\nSeleccione una:\n\n© Verdadero\n\nO Falso",
+    "id": "1778040409292-46dbc8e39128c"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "verdadero",
+    "ocrText": "La programación entera mixta se da cuando sólo algunas de las variables de decisión deben tomar valores\nenteros",
+    "id": "1778040438468-098e1bb9e1eb98"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "verdadero",
+    "ocrText": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica\nincurre en dos tipos de costos: un costo fijo necesario para iniciar la actividad y un\ncosto variable proporcional al nivel de la actividad",
+    "id": "1778040461268-94e4f5db2b0d08"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Ramificar y Acotar, en un caso de Z—> Max, cuando aparece un Z superior a la cota inferior",
+    "options": [
+      "Se lo intercambia y se lo elige como cota superior",
+      "Se lo reemplaza y se lo descarta como cota inferior\n",
+      "Se lo intercambia y se lo elige como cota inferior",
+      " Se lo descarta y se lo sigue con la cota inferior fijada"
+    ],
+    "correctAnswer": "Se lo intercambia y se lo elige como cota inferior",
+    "ocrText": "El método de Ramificar y Acotar, en un caso de Z— Max, cuando aparece un Z superior a la cota inferior\nSeleccione una:\n\n© a. Selo intercambia y se lo elige como cota superior\n\nO b. _Seloreemplaza y se lo descarta como cota inferior\n\nO €. Selo intercambia y se lo elige como cota inferior\n\nO d. Selo descarta y se lo sigue con la cota inferior fijada",
+    "id": "1778040541236-70c907abad4d3"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Ramificar y Acotar para construir las bandas crea nuevas restricciones que las limitan",
+    "options": [
+      "Cada una de ellas se agrega al problema P original y dará como resultado un problemas igual, que se tratará por separado aplicando cada vez el SIMPLEX",
+      "Cada una de ellas se agrega al problema P dual y dará como resultado 2 problemas distintos, que se tratarán por separado aplicando cada vez el SIMPLEX",
+      "Cada una de ellas se agrega al problema P original y dará como resultado 2 problemas distintos, que se tratarán por separado aplicando cada vez el SIMPLEX",
+      "Cada una de ellas se agrega al problema P original y dará como resultado 2 problemas distintos, que se tratarán juntas aplicando cada vez el SIMPLEX"
+    ],
+    "correctAnswer": "Cada una de ellas se agrega al problema P original y dará como resultado 2 problemas distintos, que se tratarán por separado aplicando cada vez el SIMPLEX",
+    "id": "1778040816685-921a71ebc6c318"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El método de Ramificar y Acotar, en un caso de z —> Max, si aparece una",
+    "options": [
+      " Solución entera ese nodo ofrece un 7 que es cota inferior que se utilizará para seguir explorando\nesa rama",
+      " Solución entera ese nodo ofrece un Z que es cota inferior que no se utilizará para seguir\nexplorando otras ramas",
+      "Solución entera ese nodo ofrece un Z que es cota superior que se utilizará para seguir explorando\notras ramas",
+      "solución entera ese nodo ofrece un Z que es cota inferior que se utilizará para seguir explorando\notras ramas"
+    ],
+    "correctAnswer": "solución entera ese nodo ofrece un Z que es cota inferior que se utilizará para seguir explorando\notras ramas",
+    "ocrText": "El método de Ramificar y Acotar, en un caso de 7 — Max, si aparece una\nSeleccione una:\nO a. Solución entera ese nodo ofrece un 7 que es cota inferior que se utilizará para seguir explorando\nesa rama\nO b. Solución entera ese nodo ofrece un Z que es cota inferior que no se utilizará para seguir\nexplorando otras ramas\nO €. Solución entera ese nodo ofrece un Z que es cota superior que se utilizará para seguir explorando\notras ramas\n© d. Solución entera ese nodo ofrece un Z que es cota inferior que se utilizará para seguir explorando\notras ramas",
+    "id": "1778040924199-e14c9009e2f5d"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En un problema de “Restricciones o bien\" para Para M suficientemente largo, la restricción “o bien\" se\nconvierte a las restricciones simultáneas siguientes: Myij + (xi - xj) >= pj y M(1 - yi) + 0d - x) >= pi",
+    "options": [
+      " Esta conversión no garantiza que puede estar vigente las dos restricciones en cualquier momento",
+      "Esta conversión no garantiza que solo puede estar vigente una de las dos restricciones en\ncualquier momento.\n",
+      "Esta conversión garantiza que solo puede estar vigente una de las dos restricciones en cualquier\nmomento.",
+      " Esta conversión garantiza que puede estar vigente las dos restricciones en cualquier momento."
+    ],
+    "correctAnswer": "Esta conversión garantiza que solo puede estar vigente una de las dos restricciones en cualquier\nmomento.",
+    "ocrText": "En un problema de “Restricciones o bien\" para Para M suficientemente largo, la restricción “o bien\" se\nconvierte a las restricciones simultáneas siguientes: Myij + (xi - xj) > pj y M(1 - yi) + 0d - x) > pi\nSeleccione una:\nO a.",
+    "id": "1778041030617-12a0590b61a9"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica\nincurre en dos tipos de costos: un costo fijo de acuerdo al nivel de la actividad y un\ncosto variable de la actividad",
+    "options": [
+      "verdadero",
+      "falso"
+    ],
+    "correctAnswer": "falso",
+    "ocrText": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica\nincurre en dos tipos de costos: un costo fijo de acuerdo al nivel de la actividad y un\ncosto variable de la actividad",
+    "id": "1778041060067-b8be5ed727b7b"
   }
 ]
