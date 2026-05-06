@@ -460,6 +460,12 @@ function PracticePicker({ questions, onStart }: { questions: Question[]; onStart
           <button className="ghost-button" type="button" onClick={() => setSelectedIds(questions.slice(-5).map((question) => question.id))}>
             Últimas 5
           </button>
+          <button className="ghost-button" type="button" onClick={() => setSelectedIds(questions.slice(30).map((question) => question.id))}>
+            Sin unidad 1
+          </button>
+          <button className="ghost-button" type="button" onClick={() => setSelectedIds(questions.slice(60).map((question) => question.id))}>
+            Sin unidades 1 y 2
+          </button>
           <button className="ghost-button" type="button" onClick={() => selectByType("multiple_choice")}>
             Multiple choice
           </button>
