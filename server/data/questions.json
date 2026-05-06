@@ -639,19 +639,6 @@
     "id": "1777998766802-69a0130b0db83"
   },
   {
-    "type": "multiple_choice",
-    "statement": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante",
-    "options": [
-      "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista"
-    ],
-    "correctAnswer": "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-    "ocrText": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante\nSeleccione una:\na.\na la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nb.\na la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista\nC.\na la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nd.\na la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista\nLa respuesta correcta es: a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-    "id": "1777999020693-1b5bf8afe7b8b8"
-  },
-  {
     "type": "drag_and_drop",
     "statement": "Resolver",
     "textParts": [
