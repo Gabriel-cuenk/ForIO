@@ -1335,17 +1335,6 @@
   },
   {
     "type": "multiple_choice",
-    "statement": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica",
-    "options": [
-      "verdadero",
-      "falso"
-    ],
-    "correctAnswer": "verdadero",
-    "ocrText": "El problema de cargo fijo tiene que ver con situaciones en que la actividad económica\nincurre en dos tipos de costos: un costo fijo necesario para iniciar la actividad y un\ncosto variable proporcional al nivel de la actividad",
-    "id": "1778040461268-94e4f5db2b0d08"
-  },
-  {
-    "type": "multiple_choice",
     "statement": "El método de Ramificar y Acotar, en un caso de Z—> Max, cuando aparece un Z superior a la cota inferior",
     "options": [
       "Se lo intercambia y se lo elige como cota superior",
@@ -1531,13 +1520,12 @@
   },
   {
     "type": "multiple_choice",
-    "statement": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una",
+    "statement": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una herramienta para resolver esta situacion es programacion lineal entera",
     "options": [
       "Verdadero",
       "Falso"
     ],
     "correctAnswer": "Verdadero",
-    "ocrText": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una\nherramienta para resolver esta situación es programación lineal entera\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Verdadero'",
     "id": "1778074171829-151421d9fd013"
   },
   {
