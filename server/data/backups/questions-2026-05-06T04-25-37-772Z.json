@@ -1531,17 +1531,5 @@
     ],
     "correctAnswer": "Cualquier fila de variables con valores decimales y enteros",
     "id": "1778041481876-72118e1507b15"
-  },
-  {
-    "type": "multiple_choice",
-    "statement": "El método de Gomory subdivide",
-    "options": [
-      "Mantiene las restricciones originales y elimina las decimales",
-      "Subdivide en dos problemas cada vez",
-      "El problema original en varios subproblemas",
-      "Mantiene la integridad del problema"
-    ],
-    "correctAnswer": "Mantiene las restricciones originales y elimina las decimales",
-    "id": "1778041537770-fdb877dd042c2"
   }
 ]

@@ -1519,29 +1519,5 @@
     "correctAnswer": "Sólo puede estar vigente una de las dos en cualquier momento",
     "ocrText": "En las restricciones “o bien” el M suficientemente grande convierte las restricciones simultáneas garantizando que\nSeleccione una\n\n© a. Sólo pueden estar vigente las dos en todo momento\n\nO) b. Puede estar vigente una de las dos en algún momento\n\nO €. Puede estar vigente cualquiera de las dos en cualquier momento\n\n© d. Sólo puede estar vigente una de las dos en cualquier momento",
     "id": "1778041414534-5c02bbfaac7e98"
-  },
-  {
-    "type": "multiple_choice",
-    "statement": "El método de Plano de corte o o también conocido como método Gomory toma de la tabla del simplex",
-    "options": [
-      "Cualquier fila de variables con valores decimales y enteros",
-      "La última fila de variables con valores decimales y enteros",
-      "Únicamente una fila de variables con valores enteros",
-      "Todas las filas de variables con valores decimales y enteros"
-    ],
-    "correctAnswer": "Cualquier fila de variables con valores decimales y enteros",
-    "id": "1778041481876-72118e1507b15"
-  },
-  {
-    "type": "multiple_choice",
-    "statement": "El método de Gomory subdivide",
-    "options": [
-      "Mantiene las restricciones originales y elimina las decimales",
-      "Subdivide en dos problemas cada vez",
-      "El problema original en varios subproblemas",
-      "Mantiene la integridad del problema"
-    ],
-    "correctAnswer": "Mantiene las restricciones originales y elimina las decimales",
-    "id": "1778041537770-fdb877dd042c2"
   }
 ]
