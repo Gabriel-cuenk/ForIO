@@ -648,7 +648,6 @@
       "__blank__"
     ],
     "draggableOptions": [
-      "funcion objetivo",
       "variables",
       "certidumbre",
       "divisibilidad",
@@ -664,7 +663,6 @@
       "funcion objetivo",
       "certidumbre"
     ],
-    "ocrText": "coeficientes, tanto de la\nvariables\ncomo de las restricciones, son conocidos con exactitud y además no varian durante el período de tiempo en que se realiza el estudio (supuesto de\ncertidumbre\n)\ndivisibilidad\nrecursos\nAditividad\ncoeficientes tecnológicos\nno negatividad\nproporcionalidad\nfuncion objetivo",
     "id": "1777999173471-4f369a7b9a9148"
   },
   {
