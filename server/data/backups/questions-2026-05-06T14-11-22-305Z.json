@@ -394,12 +394,10 @@
     "options": [
       "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo positivo.",
       "Esta situación se detecta cuando al realizar el cálculo de la variable que esta en la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo negativo.",
-      "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo reducido negativo.",
       "Esta situacion se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo positivo.",
       "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo."
     ],
     "correctAnswer": "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo.",
-    "ocrText": "Utilizando el Método Simplex, ¿Cómo se puede detectar que un problema de Programación Lineal es no acotado?\nSeleccione una:\na. Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo positivo.\nb. Esta situación se detecta cuando al realizar el cálculo de la variable que esta en la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo negativo.\nC. Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo reducido negativo.\nd. Esta situacion se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo positivo.\nLa respuesta correcta es: Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo.",
     "id": "1777995959835-1dd9efdac203a8"
   },
   {
@@ -641,19 +639,6 @@
     "id": "1777998766802-69a0130b0db83"
   },
   {
-    "type": "multiple_choice",
-    "statement": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante",
-    "options": [
-      "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista"
-    ],
-    "correctAnswer": "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-    "ocrText": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante\nSeleccione una:\na.\na la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nb.\na la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista\nC.\na la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nd.\na la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista\nLa respuesta correcta es: a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-    "id": "1777999020693-1b5bf8afe7b8b8"
-  },
-  {
     "type": "drag_and_drop",
     "statement": "Resolver",
     "textParts": [
@@ -663,7 +648,6 @@
       "__blank__"
     ],
     "draggableOptions": [
-      "funcion objetivo",
       "variables",
       "certidumbre",
       "divisibilidad",
@@ -679,7 +663,6 @@
       "funcion objetivo",
       "certidumbre"
     ],
-    "ocrText": "coeficientes, tanto de la\nvariables\ncomo de las restricciones, son conocidos con exactitud y además no varian durante el período de tiempo en que se realiza el estudio (supuesto de\ncertidumbre\n)\ndivisibilidad\nrecursos\nAditividad\ncoeficientes tecnológicos\nno negatividad\nproporcionalidad\nfuncion objetivo",
     "id": "1777999173471-4f369a7b9a9148"
   },
   {
@@ -1030,12 +1013,11 @@
     "statement": "El Valor marginal:",
     "options": [
       "está asociado a las variables reales y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente",
-      "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
+      "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento o disminucion admisible en el rango admisible del recurso, se presenta cuando  existe un sobrante de recursos",
       "está asociado a las variables slack y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente",
-      "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminución admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos"
+      "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento o disminución admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos"
     ],
-    "correctAnswer": "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
-    "ocrText": "El Valor marginal:\nSeleccione una:\na. está asociado a las variables reales y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente\nb. es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del productos, se presenta cuando no existe un cantidad de producto\nC.\nes el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminucion admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos\nd.\nestá asociado a las variables slack y me indica la cantidad perdida a causa de no haber adoptado una determinada acción al adoptar una que no es la más conveniente\nLa respuesta correcta es: es el coeficiente del cambio en el valor óptimo causado por cualquier aumento 0 disminución admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
+    "correctAnswer": "es el coeficiente del cambio en el valor óptimo causado por cualquier aumento o disminución admisible en el rango admisible del recurso, se presenta cuando no existe un sobrante de recursos",
     "id": "1777999892437-bdbfefb3f78988"
   },
   {
@@ -1179,14 +1161,12 @@
     "type": "multiple_choice",
     "statement": "La factibilidad de la solucion óptima actual se ve afectada solo si cambia:",
     "options": [
-      "Se varia los coeficientes tecnológicos 0 se agregue un nuevo producto.",
-      "Se varia el lado derecho de las restricciones, O se agrega una nueva restriccion al modelo.",
+      "Se varia los coeficientes tecnológicos o se agregue un nuevo producto.",
       "Se varian los coeficientes del funcional",
       "Se varia la disponibilidad de productos.",
       "Se varia el lado derecho de las restricciones, O se agrega una nueva restricción al modelo."
     ],
     "correctAnswer": "Se varia el lado derecho de las restricciones, O se agrega una nueva restricción al modelo.",
-    "ocrText": "La factibilidad de la solucion óptima actual se ve afectada solo si cambia:\nSeleccione una:\na. Se varia los coeficientes tecnológicos 0 se agregue un nuevo producto.\nb. Se varia el lado derecho de las restricciones, O se agrega una nueva restriccion al modelo.\nC.\nSe varian los coeficientes del funcional\nd. Se varia la disponibilidad de productos.\nLa respuesta correcta es: Se varia el lado derecho de las restricciones, O se agrega una nueva restricción al modelo.",
     "id": "1778002572370-3ef3d6da30edd"
   },
   {
@@ -1230,7 +1210,7 @@
   },
   {
     "type": "multiple_choice",
-    "statement": "El análisis de sensibilidad 0 postoptimal para los modelos de Programación Lineal, tiene por objetivo:",
+    "statement": "El análisis de sensibilidad o postoptimal para los modelos de Programación Lineal, tiene por objetivo:",
     "options": [
       "identificar el impacto que provoca en los resultados del problema original realizar determinadas variaciones en los parámetros, variables O restricciones del modelo, sin necesidad de resolver el problema nuevamente,es decir sin volver a realizar el gráfico",
       "identificar los resultados del problema original realizar determinadas variaciones en los parámetros, variables 0 restricciones del modelo conel método simplex.",
@@ -1238,7 +1218,6 @@
       "Ver los cambios del problema en el modelo, a través del método simplex."
     ],
     "correctAnswer": "identificar el impacto que provoca en los resultados del problema original realizar determinadas variaciones en los parámetros, variables O restricciones del modelo, sin necesidad de resolver el problema nuevamente,es decir sin volver a realizar el gráfico",
-    "ocrText": "El análisis de sensibilidad 0 postoptimal para los modelos de Programación Lineal, tiene por objetivo:\nSeleccione una:\na.\nidentificar el impacto que provoca en los resultados del problema original realizar determinadas variaciones en los parámetros, variables O restricciones del modelo, sin necesidad de resolver el problema nuevamente,es decir sin volver a realizar el gráfico o\nlas iteraciones del método simplex.\nb.\nidentificar los resultados del problema original realizar determinadas variaciones en los parámetros, variables 0 restricciones del modelo conel método simplex.\nC.\nresolver el problema nuevamente,es decir realizar el gráfico 0 las iteraciones del método simplex.\nd.\nVer los cambios del problema en el modelo, a través del método simplex.\nLa respuesta correcta es: identificar el impacto que provoca en los resultados del problema original realizar determinadas variaciones en los parámetros, variables O restricciones del modelo, sin necesidad de resolver el problema nuevamente,es decir sin volver a realizar el\ngráfico 0 las iteraciones del método simplex.",
     "id": "1778002572370-93df14c24245"
   },
   {
@@ -1541,5 +1520,64 @@
     ],
     "correctAnswer": "Falso",
     "id": "1778074128154-9b6edbba7d9aa"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La programación entera es un programa único que ha combinado variables y que implica una combinación de variables enteras y continuas",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "La programación entera es un programa único que ha combinado variables y que implica una combinación de variables enteras y continuas\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778074151644-6284061610bad8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Verdadero",
+    "ocrText": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una\nherramienta para resolver esta situación es programación lineal entera\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Verdadero'",
+    "id": "1778074171829-151421d9fd013"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En un problema de cobertura de conjunto las variables son:",
+    "options": [
+      "Algunas continuas y otras binarias.",
+      "Todas enteras.",
+      "Todas binarias",
+      "Algunas enteras y otras binarias."
+    ],
+    "correctAnswer": "Todas binarias",
+    "ocrText": "En un problema de cobertura de conjunto las variables son:\nSeleccione una:\na. Algunas continuas y otras binarias.\nb. Todas enteras.\nC. Todas binarias\nd. Algunas enteras y otras binarias.",
+    "id": "1778074205490-c4e3c566e7b2c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo entero puro es",
+    "options": [
+      "un problema en el que se exige que algunas variables de decisión tengan valores enteros",
+      "un problema en el que se exige que algunas las variables de decisión no tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan no valores enteros"
+    ],
+    "correctAnswer": "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "ocrText": "Un modelo entero puro es\nSeleccione una:\na. un problema en el que se exige que algunas variables de decisión tengan valores enteros\nb. un problema en el que se exige que algunas las variables de decisión no tengan valores enteros\nC. un problema en el que se exige que todas las variables de decisión tengan valores enteros\nd. un problema en el que se exige que todas las variables de decisión tengan no valores enteros\nLa respuesta correcta es: un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "id": "1778074350488-fff4b05c06785"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los modelos en los que las restricciones se satisfacen al mismo tiempo (Uno - u\notro) o son dependientes (Si - entonces), utilizan variables binarias auxiliares. La transformación utiliza un artificio matemático para presentar la restricción especial como restricciones \"and\" (\"y\").",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "Los modelos en los que las restricciones se satisfacen al mismo tiempo (Uno - u\notro) 0 son dependientes (Si - entonces), utilizan variables binarias auxiliares. La transformación utiliza un artificio matemático para presentar la\nrestricción especial como restricciones \"and\" (\"y\").\nSeleccione una:\n<\n>\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778074419801-0a46f862a321d8"
   }
 ]

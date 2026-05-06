@@ -394,12 +394,10 @@
     "options": [
       "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo positivo.",
       "Esta situación se detecta cuando al realizar el cálculo de la variable que esta en la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo negativo.",
-      "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo reducido negativo.",
       "Esta situacion se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo positivo.",
       "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo."
     ],
     "correctAnswer": "Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo.",
-    "ocrText": "Utilizando el Método Simplex, ¿Cómo se puede detectar que un problema de Programación Lineal es no acotado?\nSeleccione una:\na. Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo positivo.\nb. Esta situación se detecta cuando al realizar el cálculo de la variable que esta en la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo negativo.\nC. Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el indice de una variable no básica con costo reducido negativo.\nd. Esta situacion se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son no negativos, para j el indice de una variable no básica con costo positivo.\nLa respuesta correcta es: Esta situación se detecta cuando al realizar el cálculo de la variable que deja la base, todos los elementos Ykj de la columna j en la tabla son negativos, para j el índice de una variable no básica con costo reducido negativo.",
     "id": "1777995959835-1dd9efdac203a8"
   },
   {
@@ -641,19 +639,6 @@
     "id": "1777998766802-69a0130b0db83"
   },
   {
-    "type": "multiple_choice",
-    "statement": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante",
-    "options": [
-      "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-      "a la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista"
-    ],
-    "correctAnswer": "a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-    "ocrText": "El método simplex en general para maximización, se utiliza como criterio seleccionar como variable entrante\nSeleccione una:\na.\na la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nb.\na la base aquella variable no básica con costo más negativo, de modo de que en mayores iteraciones podamos alcanzar el óptimo en caso que éste exista\nC.\na la base aquella variable básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista\nd.\na la base aquella variable no básica con costo más positivo, de modo de que en menos iteraciones podamos alcanzar el optimo en caso que éste exista\nLa respuesta correcta es: a la base aquella variable no básica con costo más negativo, de modo de que en menos iteraciones podamos alcanzar el óptimo en caso que éste exista",
-    "id": "1777999020693-1b5bf8afe7b8b8"
-  },
-  {
     "type": "drag_and_drop",
     "statement": "Resolver",
     "textParts": [
@@ -663,7 +648,6 @@
       "__blank__"
     ],
     "draggableOptions": [
-      "funcion objetivo",
       "variables",
       "certidumbre",
       "divisibilidad",
@@ -679,7 +663,6 @@
       "funcion objetivo",
       "certidumbre"
     ],
-    "ocrText": "coeficientes, tanto de la\nvariables\ncomo de las restricciones, son conocidos con exactitud y además no varian durante el período de tiempo en que se realiza el estudio (supuesto de\ncertidumbre\n)\ndivisibilidad\nrecursos\nAditividad\ncoeficientes tecnológicos\nno negatividad\nproporcionalidad\nfuncion objetivo",
     "id": "1777999173471-4f369a7b9a9148"
   },
   {
@@ -1563,5 +1546,42 @@
     "correctAnswer": "Verdadero",
     "ocrText": "La toma de decisiones de emprender 0 no un proyecto suele hacerse conforme a consideraciones y prioridades preestablecidas de presupuesto limitado. Una\nherramienta para resolver esta situación es programación lineal entera\nSeleccione una:\nVerdadero\nFalso\nLa respuesta correcta es 'Verdadero'",
     "id": "1778074171829-151421d9fd013"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "En un problema de cobertura de conjunto las variables son:",
+    "options": [
+      "Algunas continuas y otras binarias.",
+      "Todas enteras.",
+      "Todas binarias",
+      "Algunas enteras y otras binarias."
+    ],
+    "correctAnswer": "Todas binarias",
+    "ocrText": "En un problema de cobertura de conjunto las variables son:\nSeleccione una:\na. Algunas continuas y otras binarias.\nb. Todas enteras.\nC. Todas binarias\nd. Algunas enteras y otras binarias.",
+    "id": "1778074205490-c4e3c566e7b2c8"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Un modelo entero puro es",
+    "options": [
+      "un problema en el que se exige que algunas variables de decisión tengan valores enteros",
+      "un problema en el que se exige que algunas las variables de decisión no tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+      "un problema en el que se exige que todas las variables de decisión tengan no valores enteros"
+    ],
+    "correctAnswer": "un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "ocrText": "Un modelo entero puro es\nSeleccione una:\na. un problema en el que se exige que algunas variables de decisión tengan valores enteros\nb. un problema en el que se exige que algunas las variables de decisión no tengan valores enteros\nC. un problema en el que se exige que todas las variables de decisión tengan valores enteros\nd. un problema en el que se exige que todas las variables de decisión tengan no valores enteros\nLa respuesta correcta es: un problema en el que se exige que todas las variables de decisión tengan valores enteros",
+    "id": "1778074350488-fff4b05c06785"
+  },
+  {
+    "type": "multiple_choice",
+    "statement": "Los modelos en los que las restricciones se satisfacen al mismo tiempo (Uno - u\notro) o son dependientes (Si - entonces), utilizan variables binarias auxiliares. La transformación utiliza un artificio matemático para presentar la restricción especial como restricciones \"and\" (\"y\").",
+    "options": [
+      "Verdadero",
+      "Falso"
+    ],
+    "correctAnswer": "Falso",
+    "ocrText": "Los modelos en los que las restricciones se satisfacen al mismo tiempo (Uno - u\notro) 0 son dependientes (Si - entonces), utilizan variables binarias auxiliares. La transformación utiliza un artificio matemático para presentar la\nrestricción especial como restricciones \"and\" (\"y\").\nSeleccione una:\n<\n>\nVerdadero\nFalso\nLa respuesta correcta es 'Falso'",
+    "id": "1778074419801-0a46f862a321d8"
   }
 ]
